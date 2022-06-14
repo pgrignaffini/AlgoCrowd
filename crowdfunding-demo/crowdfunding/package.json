@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "algosdk": "^1.16.0",
+    "fs": "^0.0.1-security"
+  }
+}
