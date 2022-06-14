@@ -3,6 +3,7 @@ import algosdk from 'algosdk';
 import { approval } from '../constants/Approval';
 import { clear } from '../constants/Clear';
 import { Buffer } from "buffer";
+import { CONSTANTS } from '../constants/Constants';
 
 
 const compileTeal = async (client, tealFile) => {
@@ -27,26 +28,25 @@ export async function createApp(client, creator, goal, duration) {
     const localInts = 1;
     const localBytes = 1;
     const globalInts = 14;
-    const globalBytes = 1;
+    const globalBytes = 2;
 
-    const startTime = new Date().getTime()
-    const endTime = startTime + duration * 1000
+    // const startTime = new Date().getTime()
+    // const endTime = startTime + duration * 1000
+
     //create list of bytes for app args
     let appArgs = [];
     if (creator !== undefined) {
         console.log(appArgs.push(
             algosdk.decodeAddress(creator).publicKey,
-            algosdk.bigIntToBytes(startTime, 8),
-            algosdk.bigIntToBytes(endTime, 8),
             algosdk.bigIntToBytes(goal, 8),
+            algosdk.decodeAddress(CONSTANTS.algocrowd).publicKey,
         ))
     }
 
     // app_args = [
-    //     encoding.decode_address(creator),
-    //     startTime.to_bytes(8, "big"),
-    //     endTime.to_bytes(8, "big"),
+    //     encoding.decode_address(creator.getAddress()),
     //     goal.to_bytes(8, "big"),
+    //     encoding.decode_address(algocrowd.getAddress()),
     // ]
 
     const approvalProgram = await compileTeal(client, approval)
@@ -172,18 +172,15 @@ export async function sendFunds(client, appID, funder, fundingAmount) {
     //convert to Algos
     fundingAmount *= 1000000
 
-    let payTxn = algosdk.makePaymentTxnWithSuggestedParams(funder, appAddr, fundingAmount, undefined, new Uint8Array(0), params)
-    console.log("PAYMENT TRANSACTION -> " + payTxn)
-    let payTxnId = payTxn.txID().toString();
-    console.log("Pay app txn id: " + payTxnId)
+    let fundTxn = algosdk.makePaymentTxnWithSuggestedParams(funder, appAddr, fundingAmount - CONSTANTS.PLATFORM_FEE, undefined, new Uint8Array(0), params)
+    console.log("FUND TRANSACTION -> " + fundTxn)
+    let fundTxnId = fundTxn.txID().toString();
+    console.log("FUND app txn id: " + fundTxnId)
 
-    // appCallTxn = transaction.ApplicationCallTxn(
-    //     sender=funder.getAddress(),
-    //     index=appID,
-    //     on_complete=transaction.OnComplete.NoOpOC,
-    //     app_args=[b"fund"],
-    //     sp=suggestedParams,
-    // )
+    let payFeesTxn = algosdk.makePaymentTxnWithSuggestedParams(funder, CONSTANTS.algocrowd, CONSTANTS.PLATFORM_FEE, undefined, new Uint8Array(0), params)
+    console.log("PAY FEES TRANSACTION -> " + payFeesTxn)
+    let payFeesTxnId = payFeesTxn.txID().toString();
+    console.log("PAY FEES txn id: " + payFeesTxnId)
 
     const onComplete = algosdk.OnApplicationComplete.NoOpOC;
     const options = {
@@ -199,9 +196,9 @@ export async function sendFunds(client, appID, funder, fundingAmount) {
     let appCallTxnId = appCallTxn.txID().toString();
     console.log("App call txn id: " + appCallTxnId)
 
-    algosdk.assignGroupID([payTxn, appCallTxn])
+    algosdk.assignGroupID([fundTxn, payFeesTxn, appCallTxn])
 
-    let binaryTxs = [payTxn.toByte(), appCallTxn.toByte()];
+    let binaryTxs = [fundTxn.toByte(), payFeesTxn.toByte(), appCallTxn.toByte()];
     let base64Txs = binaryTxs.map((binary) => AlgoSigner.encoding.msgpackToBase64(binary));
 
     let signedTxs = await AlgoSigner.signTxn([
@@ -210,6 +207,9 @@ export async function sendFunds(client, appID, funder, fundingAmount) {
         },
         {
             txn: base64Txs[1],
+        },
+        {
+            txn: base64Txs[2],
         },
     ]);
 
@@ -222,9 +222,6 @@ export async function sendFunds(client, appID, funder, fundingAmount) {
 
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTxs[0]["txID"], 4);
     console.log("tx confirmed" + confirmedTxn["confirmed-round"])
-
-    confirmedTxn = await algosdk.waitForConfirmation(client, signedTxs[1]["txID"], 4);
-    console.log("tx confirmed " + confirmedTxn["confirmed-round"])
 
 }
 
@@ -299,15 +296,12 @@ export async function closeCrowdfunding(client, appID, user) {
 
 }
 
-export async function optInApp(client, appID, user, fundingAmount) {
+export async function optInApp(client, appID, user) {
 
-    fundingAmount *= 1000000
-    const note = algosdk.bigIntToBytes(fundingAmount, 8)
     let params = await client.getTransactionParams().do();
 
     const options = {
         from: user,
-        note: note,
         suggestedParams: params,
         appIndex: appID,
     }

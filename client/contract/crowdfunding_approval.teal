@@ -2,11 +2,11 @@
 txn ApplicationID
 int 0
 ==
-bnz main_l18
+bnz main_l16
 txn OnCompletion
 int NoOp
 ==
-bnz main_l11
+bnz main_l9
 txn OnCompletion
 int DeleteApplication
 ==
@@ -28,76 +28,43 @@ main_l6:
 int 0
 return
 main_l7:
-int 0
+txn Sender
 byte "AmountInvested"
-txn Note
-btoi
+int 0
 app_local_put
 int 1
 return
 main_l8:
-global LatestTimestamp
-byte "start"
-app_global_get
-<
-bnz main_l10
-byte "end"
-app_global_get
-global LatestTimestamp
-<=
 txn Sender
 byte "creator"
 app_global_get
 ==
-&&
 assert
 byte "creator"
 app_global_get
 callsub closeAccountTo_1
 int 1
 return
-int 0
-return
-main_l10:
-txn Sender
-byte "creator"
-app_global_get
-==
-txn Sender
-global CreatorAddress
-==
-||
-assert
-byte "creator"
-app_global_get
-callsub closeAccountTo_1
-int 1
-return
-main_l11:
+main_l9:
 txna ApplicationArgs 0
 byte "setup"
 ==
-bnz main_l17
+bnz main_l15
 txna ApplicationArgs 0
 byte "fund"
 ==
-bnz main_l16
+bnz main_l14
 txna ApplicationArgs 0
 byte "refund"
 ==
-bnz main_l15
+bnz main_l13
 err
-main_l15:
-global LatestTimestamp
-byte "end"
-app_global_get
->
+main_l13:
 byte "total_funded"
 app_global_get
 byte "goal"
 app_global_get
 <
-&&
 assert
 txn Sender
 txn Sender
@@ -106,15 +73,37 @@ app_local_get
 callsub refundUser_0
 int 1
 return
-main_l16:
-byte "start"
-app_global_get
-global LatestTimestamp
-<=
-global LatestTimestamp
-byte "end"
-app_global_get
-<
+main_l14:
+txn Sender
+global CurrentApplicationID
+app_opted_in
+txn GroupIndex
+int 2
+-
+gtxns TypeEnum
+int pay
+==
+&&
+txn GroupIndex
+int 2
+-
+gtxns Sender
+txn Sender
+==
+&&
+txn GroupIndex
+int 2
+-
+gtxns Receiver
+global CurrentApplicationAddress
+==
+&&
+txn GroupIndex
+int 2
+-
+gtxns Amount
+global MinTxnFee
+>=
 &&
 txn GroupIndex
 int 1
@@ -134,14 +123,15 @@ txn GroupIndex
 int 1
 -
 gtxns Receiver
-global CurrentApplicationAddress
+byte "algocrowd"
+app_global_get
 ==
 &&
 txn GroupIndex
 int 1
 -
 gtxns Amount
-global MinTxnFee
+int 5000
 >=
 &&
 assert
@@ -149,53 +139,72 @@ byte "total_funded"
 byte "total_funded"
 app_global_get
 txn GroupIndex
-int 1
+int 2
 -
 gtxns Amount
 +
-global MinTxnFee
--
 app_global_put
+txn Sender
+byte "AmountInvested"
+txn Sender
+byte "AmountInvested"
+app_local_get
+txn GroupIndex
+int 2
+-
+gtxns Amount
++
+app_local_put
 int 1
 return
-main_l17:
-global LatestTimestamp
-byte "start"
+main_l15:
+txn GroupIndex
+int 1
+-
+gtxns TypeEnum
+int pay
+==
+txn GroupIndex
+int 1
+-
+gtxns Sender
+byte "creator"
 app_global_get
-<
+==
+&&
+txn GroupIndex
+int 1
+-
+gtxns Receiver
+global CurrentApplicationAddress
+==
+&&
+txn GroupIndex
+int 1
+-
+gtxns Amount
+global MinBalance
+global MinTxnFee
++
+>=
+&&
 assert
 int 1
 return
-main_l18:
+main_l16:
 byte "creator"
 txna ApplicationArgs 0
 app_global_put
-byte "start"
-txna ApplicationArgs 1
-btoi
-app_global_put
-byte "end"
-txna ApplicationArgs 2
-btoi
-app_global_put
 byte "goal"
-txna ApplicationArgs 3
+txna ApplicationArgs 1
 btoi
 app_global_put
 byte "total_funded"
 int 0
 app_global_put
-global LatestTimestamp
-txna ApplicationArgs 1
-btoi
-<
-txna ApplicationArgs 1
-btoi
+byte "algocrowd"
 txna ApplicationArgs 2
-btoi
-<
-&&
-assert
+app_global_put
 int 1
 return
 

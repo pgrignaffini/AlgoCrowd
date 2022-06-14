@@ -1,1 +1,5 @@
-export const clear = "#pragma version 5\nint 1\nreturn"
+export const clear = `
+#pragma version 5
+int 1
+return
+`

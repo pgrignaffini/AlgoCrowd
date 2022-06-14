@@ -3,6 +3,7 @@ import algosdk from 'algosdk';
 import { approval } from '../constants/Approval';
 import { clear } from '../constants/Clear';
 import { Buffer } from "buffer";
+import { CONSTANTS } from '../constants/Constants';
 
 export default function Create({ client, creator }) {
 
@@ -12,25 +13,23 @@ export default function Create({ client, creator }) {
     const globalBytes = 1;
 
     const goal = 10
-    const startTime = new Date().getTime()
-    const endTime = startTime + 300
+    // const startTime = new Date().getTime()
+    // const endTime = startTime + 300
 
     //create list of bytes for app args
     let appArgs = [];
     if (creator !== undefined) {
         console.log(appArgs.push(
             algosdk.decodeAddress(creator).publicKey,
-            algosdk.bigIntToBytes(startTime, 8),
-            algosdk.bigIntToBytes(endTime, 8),
             algosdk.bigIntToBytes(goal, 8),
+            algosdk.decodeAddress(CONSTANTS.algocrowd),
         ))
     }
 
     // app_args = [
-    //     encoding.decode_address(creator),
-    //     startTime.to_bytes(8, "big"),
-    //     endTime.to_bytes(8, "big"),
+    //     encoding.decode_address(creator.getAddress()),
     //     goal.to_bytes(8, "big"),
+    //     encoding.decode_address(algocrowd.getAddress()),
     // ]
 
     const compileTeal = async (client, tealFile) => {

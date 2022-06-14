@@ -1,6 +1,7 @@
 from pyteal import *
 
-PLATFORM_FEE = Int(5_000) #0.05 Algo
+PLATFORM_FEE = Int(5_000)  # 0.05 Algo
+
 
 def approval_program():
 
@@ -38,7 +39,6 @@ def approval_program():
             )
         )
 
-
     # *****************************************
     # *************** On Create ***************
     # *****************************************
@@ -48,7 +48,6 @@ def approval_program():
         App.globalPut(goal_amount_key, Btoi(Txn.application_args[1])),
         App.globalPut(total_funded_key, Int(0)),
         App.globalPut(algocrowd_key, Txn.application_args[2]),
-
         Approve(),
     )
 
@@ -62,9 +61,10 @@ def approval_program():
             And(
                 # the setup fund payment is before the app call
                 Gtxn[fund_txn_index].type_enum() == TxnType.Payment,
-                Gtxn[fund_txn_index].sender()    == App.globalGet(creator_key),
-                Gtxn[fund_txn_index].receiver()  == Global.current_application_address(),
-                Gtxn[fund_txn_index].amount()    >= Global.min_balance() + Global.min_txn_fee(),
+                Gtxn[fund_txn_index].sender() == App.globalGet(creator_key),
+                Gtxn[fund_txn_index].receiver() == Global.current_application_address(),
+                Gtxn[fund_txn_index].amount()
+                >= Global.min_balance() + Global.min_txn_fee(),
             )
         ),
         Approve(),
@@ -77,7 +77,7 @@ def approval_program():
     on_opt_in = Seq(
         # set local storage for user to zero
         App.localPut(Txn.sender(), Bytes("AmountInvested"), Int(0)),
-        Approve()
+        Approve(),
     )
 
     # *****************************************
@@ -94,14 +94,14 @@ def approval_program():
                 App.optedIn(Txn.sender(), Global.current_application_id()),
                 # the crowdfunding fund payment is before the app call
                 Gtxn[fund_txn_index].type_enum() == TxnType.Payment,
-                Gtxn[fund_txn_index].sender()    == Txn.sender(),
-                Gtxn[fund_txn_index].receiver()  == Global.current_application_address(),
-                Gtxn[fund_txn_index].amount()    >= Global.min_txn_fee(),
+                Gtxn[fund_txn_index].sender() == Txn.sender(),
+                Gtxn[fund_txn_index].receiver() == Global.current_application_address(),
+                Gtxn[fund_txn_index].amount() >= Global.min_txn_fee(),
                 # the crowdfunding fee payment is before the app call
                 Gtxn[fee_txn_index].type_enum() == TxnType.Payment,
-                Gtxn[fee_txn_index].sender()    == Txn.sender(),
-                Gtxn[fee_txn_index].receiver()  == App.globalGet(algocrowd_key),
-                Gtxn[fee_txn_index].amount()    >= PLATFORM_FEE,
+                Gtxn[fee_txn_index].sender() == Txn.sender(),
+                Gtxn[fee_txn_index].receiver() == App.globalGet(algocrowd_key),
+                Gtxn[fee_txn_index].amount() >= PLATFORM_FEE,
             )
         ),
         # update application funded amount (previous_funded + (just_funded - fees))
@@ -110,18 +110,23 @@ def approval_program():
             App.globalGet(total_funded_key) + Gtxn[fund_txn_index].amount(),
         ),
         # update user amount invested
-        App.localPut(Txn.sender(), Bytes("AmountInvested"), App.localGet(Txn.sender(), Bytes("AmountInvested")) + Gtxn[fund_txn_index].amount()),
+        App.localPut(
+            Txn.sender(),
+            Bytes("AmountInvested"),
+            App.localGet(Txn.sender(), Bytes("AmountInvested"))
+            + Gtxn[fund_txn_index].amount(),
+        ),
         Approve(),
     )
-  
-    
+
     # *****************************************
     # *************** On ReFund ***************
     # *****************************************
     on_refund = Seq(
         Assert(
-                # the goal has not been reached
-                App.globalGet(total_funded_key) < App.globalGet(goal_amount_key),
+            # the goal has not been reached
+            App.globalGet(total_funded_key)
+            < App.globalGet(goal_amount_key),
         ),
         refundUser(Txn.sender(), App.localGet(Txn.sender(), Bytes("AmountInvested"))),
         Approve(),
@@ -137,7 +142,6 @@ def approval_program():
         [on_call_method == Bytes("fund"), on_fund],
         [on_call_method == Bytes("refund"), on_refund],
     )
-
 
     # *****************************************
     # *************** On Delete ***************
@@ -157,11 +161,11 @@ def approval_program():
         [Txn.on_completion() == OnComplete.NoOp, on_call],
         [Txn.on_completion() == OnComplete.DeleteApplication, on_delete],
         [Txn.on_completion() == OnComplete.OptIn, on_opt_in],
-        [   
+        [
             Or(
                 Txn.on_completion() == OnComplete.CloseOut,
                 Txn.on_completion() == OnComplete.UpdateApplication,
-            ), 
+            ),
             Reject(),
         ],
     )

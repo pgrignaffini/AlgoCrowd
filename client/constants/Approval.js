@@ -1,233 +1,243 @@
-export const approval = "#pragma version 5\n" +
-    "txn ApplicationID\n" +
-    "int 0\n" +
-    "==\n" +
-    "bnz main_l18\n" +
-    "txn OnCompletion\n" +
-    "int NoOp\n" +
-    "==\n" +
-    "bnz main_l11\n" +
-    "txn OnCompletion\n" +
-    "int DeleteApplication\n" +
-    "==\n" +
-    "bnz main_l8\n" +
-    "txn OnCompletion\n" +
-    "int OptIn\n" +
-    "==\n" +
-    "bnz main_l7\n" +
-    "txn OnCompletion\n" +
-    "int CloseOut\n" +
-    "==\n" +
-    "txn OnCompletion\n" +
-    "int UpdateApplication\n" +
-    "==\n" +
-    "||\n" +
-    "bnz main_l6\n" +
-    "err\n" +
-    "main_l6:\n" +
-    "int 0\n" +
-    "return\n" +
-    "main_l7:\n" +
-    "int 0\n" +
-    "byte \"AmountInvested\"\n" +
-    "txn Note\n" +
-    "btoi\n" +
-    "app_local_put\n" +
-    "int 1\n" +
-    "return\n" +
-    "main_l8:\n" +
-    "global LatestTimestamp\n" +
-    "byte \"start\"\n" +
-    "app_global_get\n" +
-    "<\n" +
-    "bnz main_l10\n" +
-    "byte \"end\"\n" +
-    "app_global_get\n" +
-    "global LatestTimestamp\n" +
-    "<=\n" +
-    "txn Sender\n" +
-    "byte \"creator\"\n" +
-    "app_global_get\n" +
-    "==\n" +
-    "&&\n" +
-    "assert\n" +
-    "byte \"creator\"\n" +
-    "app_global_get\n" +
-    "callsub closeAccountTo_1\n" +
-    "int 1\n" +
-    "return\n" +
-    "int 0\n" +
-    "return\n" +
-    "main_l10:\n" +
-    "txn Sender\n" +
-    "byte \"creator\"\n" +
-    "app_global_get\n" +
-    "==\n" +
-    "txn Sender\n" +
-    "global CreatorAddress\n" +
-    "==\n" +
-    "||\n" +
-    "assert\n" +
-    "byte \"creator\"\n" +
-    "app_global_get\n" +
-    "callsub closeAccountTo_1\n" +
-    "int 1\n" +
-    "return\n" +
-    "main_l11:\n" +
-    "txna ApplicationArgs 0\n" +
-    "byte \"setup\"\n" +
-    "==\n" +
-    "bnz main_l17\n" +
-    "txna ApplicationArgs 0\n" +
-    "byte \"fund\"\n" +
-    "==\n" +
-    "bnz main_l16\n" +
-    "txna ApplicationArgs 0\n" +
-    "byte \"refund\"\n" +
-    "==\n" +
-    "bnz main_l15\n" +
-    "err\n" +
-    "main_l15:\n" +
-    "global LatestTimestamp\n" +
-    "byte \"end\"\n" +
-    "app_global_get\n" +
-    ">\n" +
-    "byte \"total_funded\"\n" +
-    "app_global_get\n" +
-    "byte \"goal\"\n" +
-    "app_global_get\n" +
-    "<\n" +
-    "&&\n" +
-    "assert\n" +
-    "txn Sender\n" +
-    "txn Sender\n" +
-    "byte \"AmountInvested\"\n" +
-    "app_local_get\n" +
-    "callsub refundUser_0\n" +
-    "int 1\n" +
-    "return\n" +
-    "main_l16:\n" +
-    "byte \"start\"\n" +
-    "app_global_get\n" +
-    "global LatestTimestamp\n" +
-    "<=\n" +
-    "global LatestTimestamp\n" +
-    "byte \"end\"\n" +
-    "app_global_get\n" +
-    "<\n" +
-    "&&\n" +
-    "txn GroupIndex\n" +
-    "int 1\n" +
-    "-\n" +
-    "gtxns TypeEnum\n" +
-    "int pay\n" +
-    "==\n" +
-    "&&\n" +
-    "txn GroupIndex\n" +
-    "int 1\n" +
-    "-\n" +
-    "gtxns Sender\n" +
-    "txn Sender\n" +
-    "==\n" +
-    "&&\n" +
-    "txn GroupIndex\n" +
-    "int 1\n" +
-    "-\n" +
-    "gtxns Receiver\n" +
-    "global CurrentApplicationAddress\n" +
-    "==\n" +
-    "&&\n" +
-    "txn GroupIndex\n" +
-    "int 1\n" +
-    "-\n" +
-    "gtxns Amount\n" +
-    "global MinTxnFee\n" +
-    ">=\n" +
-    "&&\n" +
-    "assert\n" +
-    "byte \"total_funded\"\n" +
-    "byte \"total_funded\"\n" +
-    "app_global_get\n" +
-    "txn GroupIndex\n" +
-    "int 1\n" +
-    "-\n" +
-    "gtxns Amount\n" +
-    "+\n" +
-    "global MinTxnFee\n" +
-    "-\n" +
-    "app_global_put\n" +
-    "int 1\n" +
-    "return\n" +
-    "main_l17:\n" +
-    "global LatestTimestamp\n" +
-    "byte \"start\"\n" +
-    "app_global_get\n" +
-    "<\n" +
-    "assert\n" +
-    "int 1\n" +
-    "return\n" +
-    "main_l18:\n" +
-    "byte \"creator\"\n" +
-    "txna ApplicationArgs 0\n" +
-    "app_global_put\n" +
-    "byte \"start\"\n" +
-    "txna ApplicationArgs 1\n" +
-    "btoi\n" +
-    "app_global_put\n" +
-    "byte \"end\"\n" +
-    "txna ApplicationArgs 2\n" +
-    "btoi\n" +
-    "app_global_put\n" +
-    "byte \"goal\"\n" +
-    "txna ApplicationArgs 3\n" +
-    "btoi\n" +
-    "app_global_put\n" +
-    "byte \"total_funded\"\n" +
-    "int 0\n" +
-    "app_global_put\n" +
-    "global LatestTimestamp\n" +
-    "txna ApplicationArgs 1\n" +
-    "btoi\n" +
-    "<\n" +
-    "txna ApplicationArgs 1\n" +
-    "btoi\n" +
-    "txna ApplicationArgs 2\n" +
-    "btoi\n" +
-    "<\n" +
-    "&&\n" +
-    "assert\n" +
-    "int 1\n" +
-    "return\n" +
-    "\n" +
-    "// refundUser\n" +
-    "refundUser_0:\n" +
-    "store 1\n" +
-    "store 0\n" +
-    "itxn_begin\n" +
-    "int pay\n" +
-    "itxn_field TypeEnum\n" +
-    "load 1\n" +
-    "global MinTxnFee\n" +
-    "-\n" +
-    "itxn_field Amount\n" +
-    "load 0\n" +
-    "itxn_field Receiver\n" +
-    "itxn_submit\n" +
-    "retsub\n" +
-    "\n" +
-    "// closeAccountTo\n" +
-    "closeAccountTo_1:\n" +
-    "store 2\n" +
-    "global CurrentApplicationAddress\n" +
-    "balance\n" +
-    "int 0\n" +
-    "!=\n" +
-    "bz closeAccountTo_1_l2\n" +
-    "itxn_begin\n" +
-    "int pay\n" +
-    "itxn_field TypeEnum\n" +
-    "load 2\n" +
-    "itxn_field CloseRemainderTo\n" +
-    "itxn_submit\n" +
-    "closeAccountTo_1_l2:\n" +
-    "retsub"
+export const approval = `#pragma version 5
+txn ApplicationID
+int 0
+==
+bnz main_l16
+txn OnCompletion
+int NoOp
+==
+bnz main_l9
+txn OnCompletion
+int DeleteApplication
+==
+bnz main_l8
+txn OnCompletion
+int OptIn
+==
+bnz main_l7
+txn OnCompletion
+int CloseOut
+==
+txn OnCompletion
+int UpdateApplication
+==
+||
+bnz main_l6
+err
+main_l6:
+int 0
+return
+main_l7:
+txn Sender
+byte "AmountInvested"
+int 0
+app_local_put
+int 1
+return
+main_l8:
+txn Sender
+byte "creator"
+app_global_get
+==
+assert
+byte "creator"
+app_global_get
+callsub closeAccountTo_1
+int 1
+return
+main_l9:
+txna ApplicationArgs 0
+byte "setup"
+==
+bnz main_l15
+txna ApplicationArgs 0
+byte "fund"
+==
+bnz main_l14
+txna ApplicationArgs 0
+byte "refund"
+==
+bnz main_l13
+err
+main_l13:
+byte "total_funded"
+app_global_get
+byte "goal"
+app_global_get
+<
+assert
+txn Sender
+txn Sender
+byte "AmountInvested"
+app_local_get
+callsub refundUser_0
+int 1
+return
+main_l14:
+txn Sender
+global CurrentApplicationID
+app_opted_in
+txn GroupIndex
+int 2
+-
+gtxns TypeEnum
+int pay
+==
+&&
+txn GroupIndex
+int 2
+-
+gtxns Sender
+txn Sender
+==
+&&
+txn GroupIndex
+int 2
+-
+gtxns Receiver
+global CurrentApplicationAddress
+==
+&&
+txn GroupIndex
+int 2
+-
+gtxns Amount
+global MinTxnFee
+>=
+&&
+txn GroupIndex
+int 1
+-
+gtxns TypeEnum
+int pay
+==
+&&
+txn GroupIndex
+int 1
+-
+gtxns Sender
+txn Sender
+==
+&&
+txn GroupIndex
+int 1
+-
+gtxns Receiver
+byte "algocrowd"
+app_global_get
+==
+&&
+txn GroupIndex
+int 1
+-
+gtxns Amount
+int 5000
+>=
+&&
+assert
+byte "total_funded"
+byte "total_funded"
+app_global_get
+txn GroupIndex
+int 2
+-
+gtxns Amount
++
+app_global_put
+txn Sender
+byte "AmountInvested"
+txn Sender
+byte "AmountInvested"
+app_local_get
+txn GroupIndex
+int 2
+-
+gtxns Amount
++
+app_local_put
+int 1
+return
+main_l15:
+txn GroupIndex
+int 1
+-
+gtxns TypeEnum
+int pay
+==
+txn GroupIndex
+int 1
+-
+gtxns Sender
+byte "creator"
+app_global_get
+==
+&&
+txn GroupIndex
+int 1
+-
+gtxns Receiver
+global CurrentApplicationAddress
+==
+&&
+txn GroupIndex
+int 1
+-
+gtxns Amount
+global MinBalance
+global MinTxnFee
++
+>=
+&&
+assert
+int 1
+return
+main_l16:
+byte "creator"
+txna ApplicationArgs 0
+app_global_put
+byte "goal"
+txna ApplicationArgs 1
+btoi
+app_global_put
+byte "total_funded"
+int 0
+app_global_put
+byte "algocrowd"
+txna ApplicationArgs 2
+app_global_put
+int 1
+return
+
+// refundUser
+refundUser_0:
+store 1
+store 0
+itxn_begin
+int pay
+itxn_field TypeEnum
+load 1
+global MinTxnFee
+-
+itxn_field Amount
+load 0
+itxn_field Receiver
+itxn_submit
+retsub
+
+// closeAccountTo
+closeAccountTo_1:
+store 2
+global CurrentApplicationAddress
+balance
+int 0
+!=
+bz closeAccountTo_1_l2
+itxn_begin
+int pay
+itxn_field TypeEnum
+load 2
+itxn_field CloseRemainderTo
+itxn_submit
+closeAccountTo_1_l2:
+retsub
+`

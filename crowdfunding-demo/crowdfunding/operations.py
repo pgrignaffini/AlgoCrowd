@@ -15,7 +15,7 @@ from .util import (
 APPROVAL_PROGRAM = b""
 CLEAR_STATE_PROGRAM = b""
 
-PLATFORM_FEE = 5_000 #0.005 Algo
+PLATFORM_FEE = 5_000  # 0.005 Algo
 
 
 def getContracts(client: AlgodClient) -> Tuple[bytes, bytes]:
@@ -35,16 +35,16 @@ def getContracts(client: AlgodClient) -> Tuple[bytes, bytes]:
         APPROVAL_PROGRAM = fullyCompileContract(client, approval_program())
         CLEAR_STATE_PROGRAM = fullyCompileContract(client, clear_state_program())
 
+    f = open("myfile.teal", "wb")
+    f.write(APPROVAL_PROGRAM)
+
     return APPROVAL_PROGRAM, CLEAR_STATE_PROGRAM
 
 
 def createCrowdfundingApp(
-    client: AlgodClient,
-    creator: Account,
-    goal: int,
-    algocrowd: Account
+    client: AlgodClient, creator: Account, goal: int, algocrowd: Account
 ) -> int:
-    """Create a new auction.
+    """Create a new crowdfunding.
 
     Args:
         client: An algod client.
@@ -70,7 +70,7 @@ def createCrowdfundingApp(
     app_args = [
         encoding.decode_address(creator.getAddress()),
         goal.to_bytes(8, "big"),
-        encoding.decode_address(algocrowd.getAddress())
+        encoding.decode_address(algocrowd.getAddress()),
     ]
 
     txn = transaction.ApplicationCreateTxn(
@@ -145,6 +145,7 @@ def setupCrowdfundingApp(
     client.send_transactions([signedFundAppTxn, signedSetupTxn])
 
     waitForTransaction(client, signedFundAppTxn.get_txid())
+
 
 def sendFunds(
     client: AlgodClient, appID: int, funder: Account, platform: Account, fundAmount: int

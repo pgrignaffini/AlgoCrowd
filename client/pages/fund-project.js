@@ -66,7 +66,7 @@ export default function CreateProject() {
     }
 
     const optin = async () => {
-        optInApp(algodClient, appId, accountContext, amount)
+        optInApp(algodClient, appId, accountContext)
     }
 
     const fund = async () => {
