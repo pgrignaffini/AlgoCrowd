@@ -87,7 +87,7 @@ async function createApp(appId, creatorAddress, name, description, imageUrl, sta
     const response = await fetch('/api/funder?funderAddress=' + funderAddress + '&appId=' + appId);
     const responseBody = await response.json();
     if (response.ok){
-      return responseBody
+      return responseBody[0].amount
     }
     else
       throw responseBody;

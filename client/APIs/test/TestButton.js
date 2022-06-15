@@ -3,12 +3,29 @@ import API from '../API'
 export default function TestButton() {
 
     async function testAPI() {
+
+        //CREATE APPLICATION
         //await API.createApp(1,"addess","name","desc","image","start","end",1)
-        let apps = await API.getAllApplications()
-        console.log(apps)
-        //await API.createApp(2,"x","name","desc","image","start","end",1)
-        apps = await API.getApplicationsFromCreatorAddress("x")
-        console.log(apps)
+
+        //GET ALL CREATED APPLICATIONS
+        //let apps = await API.getAllApplications()
+        //console.log(apps)
+
+        //GET APPLICATION FROM CREATOR ADDRESS
+        //apps = await API.getApplicationsFromCreatorAddress("1")
+        //console.log(apps)
+
+        //FUND APPLICATION
+        //await API.fundApp("funderAddress", "AppId", 3)
+
+        //GET ALL FUNDED APPLICATIONS FROM FUNDER ADDRESS
+        //let fundedApp = await API.getAllFundedApplicationsFromFunderAddress("funderAddress")
+        //console.log(fundedApp)
+
+        //GET TOTAL AMOUNT FUNDED FROM A SINGLE FUNDER RELATED TO A SINGLE APP
+        //let amount = await API.getFundedApplicationFromFunderAddressAndAppId("funderAddress", "AppId")
+        //console.log("The funded amount is: " + amount)
+
     }
 
 

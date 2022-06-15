@@ -26,7 +26,7 @@ app.post('/api/applications/create', [
         return res.status(422).json({ errors: errors.array() });
     }
     try {
-        await dao.createApp(req.body.appId, req.body.creatorAddress, req.body.name, req.body.description, req.body.imageUrl, req.body.start, req.body.end, req.body.goal)
+        await dao.createApp(req.body.appId, req.body.creatorAddress, req.body.name, req.body.description, req.body.imageUrl, req.body.start, req.body.end, parseInt(req.body.goal))
         res.status(201).end();
       } catch (err) {
         res.status(503).json({ error: `Database error during the creation of the app.` });
@@ -45,7 +45,7 @@ app.post('/api/applications/fund', [
       return res.status(422).json({ errors: errors.array() });
   }
   try {
-      await dao.fundApp(req.body.funderAddress, req.body.appId, req.body.amount)
+      await dao.fundApp(req.body.funderAddress, req.body.appId, parseInt(req.body.amount))
       res.status(201).end();
     } catch (err) {
       res.status(503).json({ error: `Database error during the funding of the app.` });
@@ -70,14 +70,16 @@ app.post('/api/applications/fund', [
 
   app.get('/api/funder', async (req, res) => {
     try {
-        let apps = null
+        let result = null
         if(req.query.appId == null)
           //Get all funded apps from funderAddress
-          apps = await dao.getAllFundedAppsFromFunderAddress(req.query.funderAddress)
-        else
-          //Get all funded rows related to a single appId from funderAddress
-          apps = await dao.getFundedAppAmountFromFunderAddressAndAppId(req.query.funderAddress, req.query.appId)
-      res.json(apps);
+          result = await dao.getAllFundedAppsFromFunderAddress(req.query.funderAddress)
+        else{
+          //Get the amount invested in a single app from a funderAddress
+          result = await dao.getFundedAppAmountFromFunderAddressAndAppId(req.query.funderAddress, req.query.appId)
+          console.log(result)
+        }
+      res.json(result);
     } catch (err) {
       res.status(500).end();
     }
