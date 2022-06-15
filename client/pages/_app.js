@@ -7,12 +7,9 @@ import Footer from '../components/Footer';
 
 function MyApp({ Component, pageProps }) {
 
-  const [account, setAccount] = useState();
-  const [isAccountConnected, setIsAccountConnected] = useState(false);
-
   return (
     <>
-      <AppWrapper account={account} isAccountConnected={isAccountConnected}>
+      <AppWrapper>
         <Header />
         <Component {...pageProps} />
         <Footer />
