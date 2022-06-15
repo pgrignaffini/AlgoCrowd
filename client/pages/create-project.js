@@ -63,8 +63,8 @@ export default function CreateProject() {
         const endTime = startTime + durationInSeconds * 1000
 
         if (account) {
-            const appId = createApp(algodClient, account, parseInt(data.goal))
-            appId ? await API.createApp(appId, account, data.name, data.desc, data.image, startTime, endTime, 1) : alert("Transaction failed!")
+            const appId = await createApp(algodClient, account, parseInt(data.goal))
+            appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, 1) : alert("Transaction failed!")
         } else { alert("You need to connect your account first") }
     }
 

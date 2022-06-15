@@ -90,7 +90,7 @@ export async function createApp(client, creator, goal) {
     let appId = transactionResponse['application-index'];
     console.log("Created new app-id: ", appId);
 
-    return String(appId)
+    return appId
 }
 
 export async function setupApp(client, appID, creator) {

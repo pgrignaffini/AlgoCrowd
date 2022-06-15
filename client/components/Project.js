@@ -33,12 +33,12 @@ export default function Project({ title, description, creator, end, percentage }
                                         className="mx-auto object-cover rounded-full h-10 w-10 " />
                                 </a>
                                 <div className="flex flex-col justify-between ml-4 text-sm">
-                                    <p className="text-gray-800 dark:text-white">
+                                    {/* <p className="text-gray-400 dark:text-gray-300">
                                         {creator}
-                                    </p>
-                                    <p className="text-gray-400 dark:text-gray-300">
+                                    </p> */}
+                                    {/* <p className="text-gray-400 dark:text-gray-300">
                                         {timeLeft} days left
-                                    </p>
+                                    </p> */}
 
                                 </div>
                                 <span

@@ -56,7 +56,7 @@ export default function Header() {
           <ul className="md:space-x-8 space-x-6 text-gray-900 font-semibold hidden md:flex">
             <li className="relative group">
               <a
-                href="/"
+                href="/project-list"
                 className="group outline-none rounded-lg"
               >
                 Home
