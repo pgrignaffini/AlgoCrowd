@@ -22,7 +22,7 @@ const compileTeal = async (client, tealFile) => {
 
 //CREATE APP
 // create unsigned transaction
-export async function createApp(client, creator, goal, duration) {
+export async function createApp(client, creator, goal) {
 
     goal *= 1000000
     const localInts = 1;
@@ -30,8 +30,6 @@ export async function createApp(client, creator, goal, duration) {
     const globalInts = 14;
     const globalBytes = 2;
 
-    // const startTime = new Date().getTime()
-    // const endTime = startTime + duration * 1000
 
     //create list of bytes for app args
     let appArgs = [];
@@ -92,6 +90,7 @@ export async function createApp(client, creator, goal, duration) {
     let appId = transactionResponse['application-index'];
     console.log("Created new app-id: ", appId);
 
+    return String(appId)
 }
 
 export async function setupApp(client, appID, creator) {
