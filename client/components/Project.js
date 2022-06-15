@@ -1,11 +1,15 @@
 import React from 'react'
-import { randomIntFromInterval } from '../utils/Utilities'
+import { randomIntFromInterval, timestampTodate } from '../utils/Utilities'
+import moment from 'moment'
 
-export default function Project({ title, description, creator, end, percentage }) {
+export default function Project({ appId, title, description, creator, end, percentage }) {
 
     const now = new Date().getTime()
     const status = now > end ? "ended" : "in progress"
-    const timeLeft = end - now
+    console.log(end)
+    const finish = moment.unix(end).format('L');
+
+    const displayCreator = creator.substring(1, 3) + "..." + creator.substring(creator.length - 12, creator.length)
 
     const randomBlogNumber = randomIntFromInterval(1, 6)
     const blogSrc = `https://www.tailwind-kit.com/images/blog/${randomBlogNumber}.jpg`
@@ -33,13 +37,12 @@ export default function Project({ title, description, creator, end, percentage }
                                         className="mx-auto object-cover rounded-full h-10 w-10 " />
                                 </a>
                                 <div className="flex flex-col justify-between ml-4 text-sm">
-                                    {/* <p className="text-gray-400 dark:text-gray-300">
-                                        {creator}
-                                    </p> */}
-                                    {/* <p className="text-gray-400 dark:text-gray-300">
-                                        {timeLeft} days left
-                                    </p> */}
-
+                                    <p className="text-gray-400 dark:text-gray-300">
+                                        {displayCreator}
+                                    </p>
+                                    <p className="text-gray-400 dark:text-gray-300">
+                                        Active till {finish}
+                                    </p>
                                 </div>
                                 <span
                                     className="ml-16 text-xs font-medium inline-block py-1 px-2 uppercase rounded-full text-white bg-green-400">

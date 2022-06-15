@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { createApp } from "../utils/ContractOperations";
+import { createApp, setupApp } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
 import { CONSTANTS } from "../constants/Constants";
 import API from "../APIs/API";
@@ -34,6 +34,8 @@ export default function CreateProject() {
         console.log("Info from storage: " + String(account))
     }, [algodClient]);
 
+
+
     const daysToSeconds = (days) => {
         return days * 24 * 60 * 60;
     }
@@ -64,6 +66,7 @@ export default function CreateProject() {
 
         if (account) {
             const appId = await createApp(algodClient, account, parseInt(data.goal))
+            await setupApp(algodClient, appId, account)
             appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, 1) : alert("Transaction failed!")
         } else { alert("You need to connect your account first") }
     }
