@@ -9,7 +9,7 @@ export default function Project({ title, description, creator, end, percentage }
 
     const randomBlogNumber = randomIntFromInterval(1, 6)
     const blogSrc = `https://www.tailwind-kit.com/images/blog/${randomBlogNumber}.jpg`
-    const randomPersonNumber = randomIntFromInterval(1, 10)
+    const randomPersonNumber = randomIntFromInterval(3, 10)
     const personSrc = `https://www.tailwind-kit.com/images/person/${randomPersonNumber}.jpg`
 
     return (
