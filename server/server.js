@@ -26,7 +26,7 @@ app.post('/api/applications/create', [
         return res.status(422).json({ errors: errors.array() });
     }
     try {
-        await dao.createApp(req.body.appId, req.body.creatorAddress, req.body.name, req.body.description, req.body.imageUrl, req.body.start, req.body.end, parseInt(req.body.goal))
+        await dao.createApp(req.body.appId, req.body.creatorAddress, req.body.name, req.body.description, req.body.imageUrl, req.body.start, req.body.end, parseFloat(req.body.goal))
         res.status(201).end();
       } catch (err) {
         res.status(503).json({ error: `Database error during the creation of the app.` });
@@ -45,7 +45,7 @@ app.post('/api/applications/fund', [
       return res.status(422).json({ errors: errors.array() });
   }
   try {
-      await dao.fundApp(req.body.funderAddress, req.body.appId, parseInt(req.body.amount))
+      await dao.fundApp(req.body.funderAddress, req.body.appId, parseFloat(req.body.amount))
       res.status(201).end();
     } catch (err) {
       res.status(503).json({ error: `Database error during the funding of the app.` });
