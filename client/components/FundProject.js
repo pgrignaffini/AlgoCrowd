@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CONSTANTS } from "../constants/Constants";
 import { optInApp, sendFunds } from "../utils/ContractOperations";
+import API from '../APIs/API';
 
 
 export default function FundProject({ project }) {
@@ -52,11 +53,13 @@ export default function FundProject({ project }) {
         let amount = parseFloat(data.amount)
         setAmount(amount)
 
+        console.log(typeof amount)
+
         console.log(account)
         console.log(parseInt(project.appId))
 
-        const accountInfo = await algodClient.accountInformation(account, parseInt(project.appId)).do();
-        console.log("info : " + JSON.stringify(accountInfo))
+        // const accountInfo = await algodClient.accountInformation(account, parseInt(project.appId)).do();
+        // console.log("info : " + JSON.stringify(accountInfo))
 
     }
 
@@ -65,7 +68,8 @@ export default function FundProject({ project }) {
     }
 
     const fund = async () => {
-        sendFunds(algodClient, parseInt(project.appId), account, amount)
+        await sendFunds(algodClient, parseInt(project.appId), account, amount)
+        await API.fundApp(account, project.appId, amount)
     }
 
 

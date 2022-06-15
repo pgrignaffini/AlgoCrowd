@@ -61,6 +61,7 @@ async function getAllApplications() {
     throw responseBody;
 }
 
+
 async function getApplicationsFromCreatorAddress(creatorAddress) {
   const response = await fetch('/api/applications?creatorAddress=' + creatorAddress);
   const responseBody = await response.json();
@@ -81,45 +82,16 @@ async function getAllFundedApplicationsFromFunderAddress(funderAddress) {
     throw responseBody;
 }
 
-  async function getApplicationsFromCreatorAddress(creatorAddress) {
-    const response = await fetch('/api/applications?creatorAddress=' + creatorAddress);
-    const responseBody = await response.json();
-    if (response.ok){
-      return responseBody
-    }
-    else
-      throw responseBody;
-  }
-
-  async function getAllFundedApplicationsFromFunderAddress(funderAddress) {
-    const response = await fetch('/api/funder?funderAddress=' + funderAddress);
-    const responseBody = await response.json();
-    if (response.ok){
-      return responseBody
-    }
-    else
-      throw responseBody;
-  }
-
-  async function getFundedApplicationFromFunderAddressAndAppId(funderAddress, appId) {
-    const response = await fetch('/api/funder?funderAddress=' + funderAddress + '&appId=' + appId);
-    const responseBody = await response.json();
-    if (response.ok){
-      return responseBody[0].amount
-    }
-    else
-      throw responseBody;
-  }
-
 async function getFundedApplicationFromFunderAddressAndAppId(funderAddress, appId) {
   const response = await fetch('/api/funder?funderAddress=' + funderAddress + '&appId=' + appId);
   const responseBody = await response.json();
   if (response.ok) {
-    return responseBody
+    return responseBody[0].amount
   }
   else
     throw responseBody;
 }
+
 
 const API = { createApp, fundApp, getAllApplications, getApplicationsFromCreatorAddress, getAllFundedApplicationsFromFunderAddress, getFundedApplicationFromFunderAddressAndAppId }
 
