@@ -48,26 +48,11 @@ export default function FundProject({ project }) {
             return
         }
 
-        console.log(data)
-
         let amount = parseFloat(data.amount)
         setAmount(amount)
 
-        console.log(typeof amount)
-
-        console.log(account)
-        console.log(parseInt(project.appId))
-
-        // const accountInfo = await algodClient.accountInformation(account, parseInt(project.appId)).do();
-        // console.log("info : " + JSON.stringify(accountInfo))
-
-    }
-
-    const optin = async () => {
-        optInApp(algodClient, parseInt(project.appId), account)
-    }
-
-    const fund = async () => {
+        const isOptedIn = await API.getFundedApplicationFromFunderAddressAndAppId(account, project.appId)
+        if (!isOptedIn) await optInApp(algodClient, parseInt(project.appId), account)
         await sendFunds(algodClient, parseInt(project.appId), account, amount)
         await API.fundApp(account, project.appId, amount)
     }
@@ -126,7 +111,7 @@ export default function FundProject({ project }) {
                                 <form onSubmit={handleSubmit}>
                                     <div className="flex flex-col mb-2">
                                         <div className=" relative ">
-                                            <input type="number" id="amount" step=".01"
+                                            <input type="number" id="amount" step=".01" min="0"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                                 name="" placeholder="Amount" required />
                                         </div>
@@ -134,27 +119,12 @@ export default function FundProject({ project }) {
                                     <div className="w-full text-center">
                                         <button type="submit"
                                             className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                            Submit
+                                            Send funds
                                         </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <div className="w-full text-center">
-                            <button type="button"
-                                className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                                onClick={optin}>
-                                Opt-in
-                            </button>
-                        </div>
-                        <div className="w-full text-center">
-                            <button type="button"
-                                className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                                onClick={fund}>
-                                Send funds
-                            </button>
-                        </div>
-
                     </div>
                 </div>
             </div>
