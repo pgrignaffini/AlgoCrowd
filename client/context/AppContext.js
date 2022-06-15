@@ -1,11 +1,11 @@
 // src/context/state.js
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
 
 const AppContext = createContext();
 
-export function AppWrapper({ children, account, isAccountConnected }) {
+export function AppWrapper({ children }) {
 
-    let sharedState = { account, isAccountConnected }
+    let sharedState = {}
 
     return (
         <AppContext.Provider value={sharedState}>

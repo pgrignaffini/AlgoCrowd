@@ -1,17 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
-import {createApp} from "../utils/ContractOperations";
-const algosdk = require("algosdk");
+import { createApp } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
+import { CONSTANTS } from "../constants/Constants";
 
 
 export default function CreateProject() {
-    const algodServer = "https://testnet-algorand.api.purestake.io/ps2/";
-    const token = { "X-API-Key": process.env.NEXT_PUBLIC_API_KEY }; // using .env.local to load environment variables
-    const port = "";
-    const algodClient = new algosdk.Algodv2(token, algodServer, port);
 
-    const context = useAppContext()
-    const accountContext = context["account"]
+    const algosdk = require("algosdk");
+    const algodServer = CONSTANTS.baseServer
+    const token = CONSTANTS.algodToken // using .env.local to load environment variables
+    const port = CONSTANTS.port
+    const algodClient = new algosdk.Algodv2(token, algodServer, port);
+    const [account, setAccount] = useState()
 
     useEffect(() => {
         if (algodClient !== null) {
@@ -26,7 +26,10 @@ export default function CreateProject() {
                 });
         }
 
-        console.log("Info from context: " + JSON.stringify(accountContext))
+        const connectedAccount = localStorage.getItem('connectedAccount')
+        if (connectedAccount) setAccount(connectedAccount)
+
+        console.log("Info from storage: " + String(account))
     }, [algodClient]);
 
     const daysToSeconds = (days) => {
@@ -51,7 +54,7 @@ export default function CreateProject() {
         const durationInSeconds = daysToSeconds(parseInt(data.duration))
         console.log(data)
 
-        createApp(algodClient, accountContext, parseInt(data.goal), durationInSeconds)
+        createApp(algodClient, account, parseInt(data.goal), durationInSeconds)
     }
 
     return (

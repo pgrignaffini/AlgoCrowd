@@ -1,23 +1,20 @@
-import React, { useEffect } from "react";
-import {useAppContext} from "../context/AppContext";
+import React, { useEffect, useState } from "react";
 
-export default function Header({ setAccount, setAccountIsConnected }) {
-  const context = useAppContext()
-  const accountContext = context["account"]
-  const isAccountConnectedContext = context["isAccountConnected"]
+export default function Header() {
+
+  const [isAccountConnected, setIsAccountConnected] = useState(false)
 
   useEffect(() => {
     localStorage.theme = "light";
+    const isConnected = localStorage.getItem('connectedAccount')
+    if (isConnected) setIsAccountConnected(true)
   });
 
   const connectAlgoSigner = async () => {
-    if(isAccountConnectedContext) {
-      alert("You are connected, your address is: " + accountContext)
-      return
-    }
-    if (typeof AlgoSigner !== "undefined") {
+    if (typeof AlgoSigner !== "undefined" && typeof window !== 'undefined') {
       await AlgoSigner.connect();
-      getUserAccount();
+      const account = await getUserAccount();
+      localStorage.setItem('connectedAccount', String(account));
     } else {
       alert("This browser doesn't have the required AlgoSigner extension!");
     }
@@ -27,11 +24,8 @@ export default function Header({ setAccount, setAccountIsConnected }) {
     const account = await AlgoSigner.accounts({
       ledger: "TestNet",
     });
-    console.log(account[0]["address"]);
-    alert("Your Algorand Account is correctly connected!");
-
-    setAccount(account[0]["address"]);
-    setAccountIsConnected(true);
+    console.log("Connected account: " + account[0]["address"]);
+    return account[0]["address"]
   };
 
   return (
@@ -88,8 +82,8 @@ export default function Header({ setAccount, setAccountIsConnected }) {
             </li>
             <li className="relative group">
               <a
-                  href="claim-funds"
-                  className="outline-none rounded-lg"
+                href="claim-funds"
+                className="outline-none rounded-lg"
               >
                 Claim Funds
               </a>
@@ -100,7 +94,7 @@ export default function Header({ setAccount, setAccountIsConnected }) {
                 onClick={connectAlgoSigner}
                 className="bg-purple-500 px-4 py-2 rounded-xl text-white hover:bg-purple-400 active:bg-purple-600 focus:ring focus:ring-purple-500 focus:ring-opacity-25 outline-none"
               >
-                  {isAccountConnectedContext ? "Account connected" : "Connect Account"}
+                {isAccountConnected ? "Account connected" : "Connect Account"}
               </a>
             </li>
           </ul>

@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { setupApp } from "../utils/ContractOperations";
-import { optInApp } from "../utils/ContractOperations";
-import { sendFunds } from "../utils/ContractOperations";
-const algosdk = require("algosdk");
+import { closeCrowdfunding, sendRefunds, setupApp, optInApp, sendFunds } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
-
+import { CONSTANTS } from "../constants/Constants";
 
 export default function CreateProject() {
-    const algodServer = "https://testnet-algorand.api.purestake.io/ps2/";
-    const token = { "X-API-Key": process.env.NEXT_PUBLIC_API_KEY }; // using .env.local to load environment variables
-    const port = "";
+
+    const algosdk = require("algosdk");
+    const algodServer = CONSTANTS.baseServer
+    const token = CONSTANTS.algodToken // using .env.local to load environment variables
+    const port = CONSTANTS.port
     const algodClient = new algosdk.Algodv2(token, algodServer, port);
+
     const [appId, setAppId] = useState()
     const [amount, setAmount] = useState()
+    const [account, setAccount] = useState()
 
-    const context = useAppContext()
-    const accountContext = context["account"]
 
     useEffect(() => {
         if (algodClient !== null) {
@@ -30,7 +29,9 @@ export default function CreateProject() {
                 });
         }
 
-        console.log("Info from context: " + JSON.stringify(accountContext))
+        const connectedAccount = localStorage.getItem('connectedAccount')
+        if (connectedAccount) setAccount(connectedAccount)
+
     }, [algodClient]);
 
     useEffect(() => {
@@ -62,15 +63,23 @@ export default function CreateProject() {
     }
 
     const setup = async () => {
-        setupApp(algodClient, appId, accountContext)
+        setupApp(algodClient, appId, account)
     }
 
     const optin = async () => {
-        optInApp(algodClient, appId, accountContext)
+        optInApp(algodClient, appId, account)
     }
 
     const fund = async () => {
-        sendFunds(algodClient, appId, accountContext, amount)
+        sendFunds(algodClient, appId, account, amount)
+    }
+
+    const refund = async () => {
+        sendRefunds(algodClient, appId, account)
+    }
+
+    const close = async () => {
+        closeCrowdfunding(algodClient, appId, account)
     }
 
     return (
@@ -124,6 +133,18 @@ export default function CreateProject() {
                                     <button onClick={fund}
                                         className="py-2 px-4  bg-indigo-500 hover:bg-indigo-500 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                                         Fund
+                                    </button>
+                                </div>
+                                <div className="flex w-full my-4">
+                                    <button onClick={refund}
+                                        className="py-2 px-4  bg-indigo-500 hover:bg-indigo-500 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                        Refund
+                                    </button>
+                                </div>
+                                <div className="flex w-full my-4">
+                                    <button onClick={close}
+                                        className="py-2 px-4  bg-indigo-500 hover:bg-indigo-500 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                        Close
                                     </button>
                                 </div>
                             </div>

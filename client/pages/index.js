@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import Create from "../components/CreateButton";
 const algosdk = require("algosdk");
 import { CONSTANTS } from "../constants/Constants";
-import CreateButtonCounter from "../components/CreateButtonCounter";
 
 export default function Home() {
   let userAccount = useRef();
@@ -295,7 +294,6 @@ export default function Home() {
         </button></div>
       <div className="w-full inline-flex mt-8">
         <Create client={algodClient} creator={account} />
-        <CreateButtonCounter client={algodClient} creator={account} />
       </div>
     </div>
   );

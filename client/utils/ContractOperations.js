@@ -58,8 +58,6 @@ export async function createApp(client, creator, goal, duration) {
     params.fee = 1000;
     params.flatFee = true;
 
-    console.log("suggestedparams" + params)
-
     let txn = algosdk.makeApplicationCreateTxn(creator, params, onComplete,
         approvalProgram, clearProgram,
         localInts, localBytes, globalInts, globalBytes, appArgs);
@@ -92,7 +90,6 @@ export async function createApp(client, creator, goal, duration) {
     // display results
     let transactionResponse = await client.pendingTransactionInformation(txId).do()
     let appId = transactionResponse['application-index'];
-    console.log("Response: " + JSON.stringify(transactionResponse))
     console.log("Created new app-id: ", appId);
 
 }
@@ -157,9 +154,6 @@ export async function setupApp(client, appID, creator) {
     console.log("Tx sent: " + JSON.stringify(sendTxs))
 
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTxs[0]["txID"], 4);
-    console.log("tx confirmed" + JSON.stringify(confirmedTxn["confirmed-round"]))
-
-    confirmedTxn = await algosdk.waitForConfirmation(client, signedTxs[1]["txID"], 4);
     console.log("tx confirmed " + JSON.stringify(confirmedTxn["confirmed-round"]))
 
 }
@@ -221,9 +215,25 @@ export async function sendFunds(client, appID, funder, fundingAmount) {
     console.log("Tx sent: " + JSON.stringify(sendTxs))
 
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTxs[0]["txID"], 4);
-    console.log("tx confirmed" + confirmedTxn["confirmed-round"])
+    console.log("tx confirmed: " + confirmedTxn["confirmed-round"])
 
 }
+
+// suggestedParams = client.suggested_params()
+
+//     refundTxn = transaction.ApplicationCallTxn(
+//         sender=user.getAddress(),
+//         index=appID,
+//         on_complete=transaction.OnComplete.NoOpOC,
+//         app_args=[b"refund"],
+//         sp=suggestedParams,
+//     )
+
+//     signedRefundTxn = refundTxn.sign(user.getPrivateKey())
+
+//     client.send_transaction(signedRefundTxn)
+
+//     waitForTransaction(client, signedRefundTxn.get_txid())
 
 export async function sendRefunds(client, appID, user) {
 
@@ -258,7 +268,7 @@ export async function sendRefunds(client, appID, user) {
 
     // Wait for transaction to be confirmed
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTx[0]["txID"], 4);
-    console.log("confirmed" + confirmedTxn["confirmed-round"])
+    console.log("confirmed: " + confirmedTxn["confirmed-round"])
 
 }
 
@@ -292,7 +302,7 @@ export async function closeCrowdfunding(client, appID, user) {
 
     // Wait for transaction to be confirmed
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTx[0]["txID"], 4);
-    console.log("confirmed" + confirmedTxn["confirmed-round"])
+    console.log("confirmed: " + confirmedTxn["confirmed-round"])
 
 }
 
@@ -326,6 +336,6 @@ export async function optInApp(client, appID, user) {
 
     // Wait for transaction to be confirmed
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTx[0]["txID"], 4);
-    console.log("confirmed" + confirmedTxn["confirmed-round"])
+    console.log("confirmed: " + confirmedTxn["confirmed-round"])
 
 }
