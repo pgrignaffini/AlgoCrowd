@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { createApp } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
 import { CONSTANTS } from "../constants/Constants";
+import API from "../APIs/API";
 
 
 export default function CreateProject() {
@@ -41,11 +42,14 @@ export default function CreateProject() {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault()
 
+
         // Get data from the form.
         const data = {
             name: event.target.name.value,
             goal: event.target.goal.value,
-            duration: event.target.duration.value
+            duration: event.target.duration.value,
+            image: event.target.image.value,
+            desc: event.target.desc.value
         }
 
         if (data.name.length === 0 || data.goal.length === 0 || data.duration.length === 0) {
@@ -55,7 +59,13 @@ export default function CreateProject() {
         const durationInSeconds = daysToSeconds(parseInt(data.duration))
         console.log(data)
 
-        account ? createApp(algodClient, account, parseInt(data.goal), durationInSeconds) : alert("You need to connect your account first")
+        const startTime = new Date().getTime()
+        const endTime = startTime + durationInSeconds * 1000
+
+        if (account) {
+            const appId = createApp(algodClient, account, parseInt(data.goal))
+            appId ? await API.createApp(appId, account, data.name, data.desc, data.image, startTime, endTime, 1) : alert("Transaction failed!")
+        } else { alert("You need to connect your account first") }
     }
 
     return (
@@ -76,19 +86,33 @@ export default function CreateProject() {
                                         <div className=" relative ">
                                             <input type="text" id="name"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="pseudo" placeholder="Project name" required />
+                                                name="Name" placeholder="Project name" required />
                                         </div>
                                     </div>
                                     <div className="flex gap-4 mb-2">
                                         <div className=" relative ">
                                             <input type="number" id="goal"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="First name" placeholder="Goal (algo)" required />
+                                                name="Goal" placeholder="Goal (algo)" required />
                                         </div>
                                         <div className=" relative ">
                                             <input type="number" id="duration"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="Last name" placeholder="Duration (days)" required />
+                                                name="Duration" placeholder="Duration (days)" required />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col mb-2">
+                                        <div className=" relative ">
+                                            <input type="text" id="desc"
+                                                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                                name="Description" placeholder="Description" required />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col mb-2">
+                                        <div className=" relative ">
+                                            <input type="text" id="image"
+                                                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                                name="Image" placeholder="Image URL" required />
                                         </div>
                                     </div>
                                     <div className="flex w-full my-4">

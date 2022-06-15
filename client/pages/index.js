@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Create from "../components/CreateButton";
 import { CONSTANTS } from "../constants/Constants";
 import algosdk from 'algosdk';
 
