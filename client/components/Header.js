@@ -8,13 +8,14 @@ export default function Header() {
     localStorage.theme = "light";
     const isConnected = localStorage.getItem('connectedAccount')
     if (isConnected) setIsAccountConnected(true)
-  });
+  }, []);
 
   const connectAlgoSigner = async () => {
     if (typeof AlgoSigner !== "undefined" && typeof window !== 'undefined') {
       await AlgoSigner.connect();
       const account = await getUserAccount();
       localStorage.setItem('connectedAccount', String(account));
+      if (account) setIsAccountConnected(true)
     } else {
       alert("This browser doesn't have the required AlgoSigner extension!");
     }
@@ -55,7 +56,7 @@ export default function Header() {
           <ul className="md:space-x-8 space-x-6 text-gray-900 font-semibold hidden md:flex">
             <li className="relative group">
               <a
-                href=""
+                href="/"
                 className="group outline-none rounded-lg"
               >
                 Home

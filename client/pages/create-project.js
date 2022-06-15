@@ -14,6 +14,7 @@ export default function CreateProject() {
     const [account, setAccount] = useState()
 
     useEffect(() => {
+
         if (algodClient !== null) {
             algodClient
                 .healthCheck()
@@ -54,7 +55,7 @@ export default function CreateProject() {
         const durationInSeconds = daysToSeconds(parseInt(data.duration))
         console.log(data)
 
-        createApp(algodClient, account, parseInt(data.goal), durationInSeconds)
+        account ? createApp(algodClient, account, parseInt(data.goal), durationInSeconds) : alert("You need to connect your account first")
     }
 
     return (
