@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import Header from '../components/Header'
 import { useState } from 'react'
 import { AppWrapper } from '../context/AppContext';
+import Footer from '../components/Footer';
 
 
 function MyApp({ Component, pageProps }) {
@@ -12,8 +13,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <AppWrapper account={account} isAccountConnected={isAccountConnected}>
-        <Header setAccount={setAccount} setAccountIsConnected={setIsAccountConnected} account={account} isAccountConnected={isAccountConnected}/>
+        <Header />
         <Component {...pageProps} />
+        <Footer />
       </AppWrapper>
     </>
   )
