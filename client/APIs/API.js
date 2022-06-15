@@ -86,7 +86,7 @@ async function getFundedApplicationFromFunderAddressAndAppId(funderAddress, appI
   const response = await fetch('/api/funder?funderAddress=' + funderAddress + '&appId=' + appId);
   const responseBody = await response.json();
   if (response.ok) {
-    return responseBody[0].amount
+    return responseBody[0]
   }
   else
     throw responseBody;
