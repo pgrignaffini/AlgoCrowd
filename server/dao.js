@@ -112,4 +112,17 @@ exports.getFundedAppAmountFromFunderAddressAndAppId = (funderAddress, appId) => 
 	});
 };
 
+exports.getFundedAppAmountFromAppId = (appId) => {
+	return new Promise((resolve, reject) => {
+		const sql = "SELECT sum(amount) as amount FROM fundedApplication WHERE appId = '" + appId + "' GROUP BY appId";
+		db.all(sql, [], function (err, rows) {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve(rows);
+		});
+	});
+};
+
 //"SELECT * FROM application WHERE creatorAddress = '" + creatorAddress + "' AND start = '" + start + "'"

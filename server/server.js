@@ -94,6 +94,15 @@ app.get('/api/funder', async (req, res) => {
   }
 });
 
+app.get('/api/funded', async (req, res) => {
+  try {
+    let apps = await dao.getFundedAppAmountFromAppId(req.query.appId)
+    res.json(apps);
+  } catch (err) {
+    res.status(500).end();
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`react-server listening at http://localhost:${port}`);
