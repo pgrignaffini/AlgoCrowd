@@ -12,7 +12,6 @@ export default function FundProject({ project }) {
     const port = CONSTANTS.port
     const algodClient = new algosdk.Algodv2(token, algodServer, port);
 
-    const [amount, setAmount] = useState()
     const [account, setAccount] = useState()
 
     console.log("Project id: " + project.appId)
@@ -49,10 +48,10 @@ export default function FundProject({ project }) {
         }
 
         let amount = parseFloat(data.amount)
-        setAmount(amount)
 
-        const isOptedIn = await API.getFundedApplicationFromFunderAddressAndAppId(account, project.appId)
-        if (!isOptedIn) await optInApp(algodClient, parseInt(project.appId), account)
+        const accountInfo = await algodClient.accountInformation(account).do();
+        const isOptedIn = accountInfo["apps-local-state"].filter(app => String(app.id) === project.appId)
+        if (!isOptedIn.length) await optInApp(algodClient, parseInt(project.appId), account)
         await sendFunds(algodClient, parseInt(project.appId), account, amount)
         await API.fundApp(account, project.appId, amount)
     }

@@ -74,19 +74,10 @@ export default function Header() {
             </li>
             <li className="relative group">
               <a
-                href="fund-project"
-                className=" outline-none rounded-lg"
-              >
-                Fund Project
-              </a>
-              <div className="w-full h-0.5 bg-transparent group-hover:bg-purple-500 transition-al absolute bottom-0" />
-            </li>
-            <li className="relative group">
-              <a
-                href="claim-funds"
+                href="user-area"
                 className="outline-none rounded-lg"
               >
-                Claim Funds
+                User Area
               </a>
               <div className="w-full h-0.5 bg-transparent group-hover:bg-purple-500 transition-al absolute bottom-0" />
             </li>

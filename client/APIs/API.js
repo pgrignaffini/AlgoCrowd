@@ -72,6 +72,16 @@ async function getApplicationsFromCreatorAddress(creatorAddress) {
     throw responseBody;
 }
 
+async function getApplicationFromAppId(appId) {
+  const response = await fetch('/api/application?appId=' + appId);
+  const responseBody = await response.json();
+  if (response.ok) {
+    return responseBody
+  }
+  else
+    throw responseBody;
+}
+
 async function getAllFundedApplicationsFromFunderAddress(funderAddress) {
   const response = await fetch('/api/funder?funderAddress=' + funderAddress);
   const responseBody = await response.json();
@@ -93,6 +103,6 @@ async function getFundedApplicationFromFunderAddressAndAppId(funderAddress, appI
 }
 
 
-const API = { createApp, fundApp, getAllApplications, getApplicationsFromCreatorAddress, getAllFundedApplicationsFromFunderAddress, getFundedApplicationFromFunderAddressAndAppId }
+const API = { createApp, fundApp, getApplicationFromAppId, getAllApplications, getApplicationsFromCreatorAddress, getAllFundedApplicationsFromFunderAddress, getFundedApplicationFromFunderAddressAndAppId }
 
 export default API;
