@@ -87,7 +87,7 @@ exports.getApplicationFromAppId = (appId) => {
 //Get funded apps by a single funder
 exports.getAllFundedAppsFromFunderAddress = (funderAddress) => {
 	return new Promise((resolve, reject) => {
-		const sql = "SELECT appId FROM fundedApplication WHERE funderAddress = '" + funderAddress + "'";
+		const sql = "SELECT DISTINCT appId FROM fundedApplication WHERE funderAddress = '" + funderAddress + "'";
 		db.all(sql, [], function (err, rows) {
 			if (err) {
 				reject(err);
