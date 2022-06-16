@@ -301,3 +301,95 @@ def test_refunds():
         >= platformBalance
         >= TEMP_ACCOUNT_BALANCE + PLATFORM_FEE
     )
+
+
+def test_double_refunds():
+    client = getAlgodClient()
+
+    creator = getTemporaryAccount(client)
+    platform = getTemporaryAccount(client)
+
+    goal = 1_000_000  # 1 Algo
+
+    appID = createCrowdfundingApp(
+        client=client, creator=creator, goal=goal, algocrowd=platform
+    )
+
+    setupCrowdfundingApp(
+        client=client,
+        appID=appID,
+        sender=creator,
+    )
+
+    funder = getTemporaryAccount(client)
+    funderAlgosBefore = getBalances(client, funder.getAddress())[0]
+
+    optInApp(client=client, appID=appID, account=funder)
+    funderBalanceAfterOptIn = getBalances(client, funder.getAddress())[0]
+    # each tx costs ~1000 in fees
+    assert (
+        funderAlgosBefore - 500 >= funderBalanceAfterOptIn >= funderAlgosBefore - 1000
+    )
+
+    fundAmount = 500_000
+    sendFunds(
+        client=client,
+        appID=appID,
+        funder=funder,
+        platform=platform,
+        fundAmount=fundAmount,
+    )
+    assert getUserFundedAmount(client, funder.getAddress()) == fundAmount - PLATFORM_FEE
+    funderBalanceAfterSendingFunds = getBalances(client, funder.getAddress())[0]
+    # sendFunds consists of 3 txs =~ 3000 in fees
+    assert (
+        funderBalanceAfterOptIn - fundAmount - 2 * 1000
+        >= funderBalanceAfterSendingFunds
+        >= funderBalanceAfterOptIn - fundAmount - 3 * 1000
+    )
+
+    sendRefunds(client=client, appID=appID, user=funder)
+    with pytest.raises(Exception):
+        sendRefunds(client=client, appID=appID, user=funder)
+
+
+def test_double_close():
+    client = getAlgodClient()
+
+    creator = getTemporaryAccount(client)
+    platform = getTemporaryAccount(client)
+
+    goal = 1_000_000  # 1 Algo
+
+    appID = createCrowdfundingApp(
+        client=client, creator=creator, goal=goal, algocrowd=platform
+    )
+
+    setupCrowdfundingApp(
+        client=client,
+        appID=appID,
+        sender=creator,
+    )
+
+    actualAppBalances = getBalances(client, get_application_address(appID))
+    print("App balance " + str(actualAppBalances[0]))
+
+    funder = getTemporaryAccount(client)
+
+    optInApp(client=client, appID=appID, account=funder)
+
+    fundAmount = 2000_000
+    sendFunds(
+        client=client,
+        appID=appID,
+        funder=funder,
+        platform=platform,
+        fundAmount=fundAmount,
+    )
+    actualAppBalances = getBalances(client, get_application_address(appID))
+    print("App balance " + str(actualAppBalances[0]))
+
+    closeCrowdfunding(client, appID, creator)
+
+    with pytest.raises(Exception):
+        closeCrowdfunding(client, appID, creator)

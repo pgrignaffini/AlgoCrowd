@@ -29,7 +29,7 @@ export default function Home() {
         </div>
         <div className="w-1/2 px-6">
           <div className="grid grid-cols-1 gap-12">
-            <DisplayProjects projects={projects.slice(-half)} />
+            <DisplayProjects projects={projects.slice(half, projects.length)} />
           </div>
         </div>
       </div>

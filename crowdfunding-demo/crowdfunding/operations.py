@@ -19,7 +19,7 @@ PLATFORM_FEE = 5_000  # 0.005 Algo
 
 
 def getContracts(client: AlgodClient) -> Tuple[bytes, bytes]:
-    """Get the compiled TEAL contracts for the auction.
+    """Get the compiled TEAL contracts for the crowdfunding.
 
     Args:
         client: An algod client that has the ability to compile TEAL programs.

@@ -11,10 +11,10 @@ export default function FundProject({ project }) {
     const context = useAppContext()
     const algodClient = context["algodClient"]
     const title = `Invest now on project ${project.name}!`
-
     const [account, setAccount] = useState()
 
-    console.log("Project id: " + project.appId)
+    // creators cannot fund their projects
+    const isCreator = String(account) === String(project.creatorAddress) ? true : false
 
     useEffect(() => {
 
@@ -74,7 +74,8 @@ export default function FundProject({ project }) {
                         </div>
                         <div className="w-full text-center">
                             <button type="submit"
-                                className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg disabled:opacity-25 "
+                                disabled={isCreator}>
                                 Send funds
                             </button>
                         </div>

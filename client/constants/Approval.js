@@ -65,12 +65,22 @@ app_global_get
 byte "goal"
 app_global_get
 <
+txn Sender
+byte "AmountInvested"
+app_local_get
+int 0
+>
+&&
 assert
 txn Sender
 txn Sender
 byte "AmountInvested"
 app_local_get
 callsub refundUser_0
+txn Sender
+byte "AmountInvested"
+int 0
+app_local_put
 int 1
 return
 main_l14:

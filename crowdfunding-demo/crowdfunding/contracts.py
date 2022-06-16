@@ -124,11 +124,15 @@ def approval_program():
     # *****************************************
     on_refund = Seq(
         Assert(
-            # the goal has not been reached
-            App.globalGet(total_funded_key)
-            < App.globalGet(goal_amount_key),
+            And(
+                # the goal has not been reached
+                App.globalGet(total_funded_key) < App.globalGet(goal_amount_key),
+                # the user has not already been refunded
+                App.localGet(Txn.sender(), Bytes("AmountInvested")) > Int(0),
+            )
         ),
         refundUser(Txn.sender(), App.localGet(Txn.sender(), Bytes("AmountInvested"))),
+        App.localPut(Txn.sender(), Bytes("AmountInvested"), Int(0)),
         Approve(),
     )
 
