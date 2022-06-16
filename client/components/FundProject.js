@@ -17,6 +17,7 @@ export default function FundProject({ project }) {
     console.log("Project id: " + project.appId)
 
     useEffect(() => {
+
         if (algodClient !== null) {
             algodClient
                 .healthCheck()

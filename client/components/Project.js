@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { randomIntFromInterval, calculatePercentage, convertEpochToSpecificTimezone } from '../utils/Utilities'
+import { randomIntFromInterval, calculatePercentage } from '../utils/Utilities'
 import API from '../APIs/API'
 import ClaimRefundsButton from './ClaimRefundsButton'
 import CollectButton from './CollectButton'
+import Link from 'next/link'
 
 export default function Project({ project, type }) {
 
@@ -39,8 +40,13 @@ export default function Project({ project, type }) {
     return (
         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
             <div className="w-full block h-full">
-                <img alt="blog photo" src={blogSrc}
-                    className="max-h-40 w-full object-cover" />
+                <Link href={{
+                    pathname: `/${encodeURIComponent(project.appId)}`,
+                    query: project
+                }}>
+                    <img alt="blog photo" src={blogSrc}
+                        className="max-h-40 w-full object-cover" />
+                </Link>
                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                     <p className="text-gray-800 dark:text-white text-xl font-medium mb-2">
                         {project.name}

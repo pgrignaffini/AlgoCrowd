@@ -1,6 +1,4 @@
 import React from 'react'
-import Project from './Project'
-import Link from 'next/link'
 import DisplayProjects from './DisplayProjects'
 
 export default function FundedProjects({ projects }) {

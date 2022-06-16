@@ -8,9 +8,8 @@ export default function ClaimRefundsButton({ appID, disabled }) {
     const algodClient = context["algodClient"]
 
     const refund = async () => {
-        // const connectedAccount = localStorage.getItem('connectedAccount')
-        // sendRefunds(algodClient, appID, connectedAccount)
-        console.log("click")
+        const connectedAccount = localStorage.getItem('connectedAccount')
+        sendRefunds(algodClient, parseInt(appID), connectedAccount)
     }
 
     return (

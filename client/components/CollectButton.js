@@ -9,7 +9,7 @@ export default function CollectButton({ appID, disabled }) {
 
     const collect = async () => {
         const connectedAccount = localStorage.getItem('connectedAccount')
-        closeCrowdfunding(algodClient, appID, connectedAccount)
+        closeCrowdfunding(algodClient, parseInt(appID), connectedAccount)
     }
 
     return (
