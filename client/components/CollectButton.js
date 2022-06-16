@@ -1,17 +1,22 @@
 import React from 'react'
 import { closeCrowdfunding } from "../utils/ContractOperations";
+import { useAppContext } from '../context/AppContext';
 
-export default function CollectButton({ client, appID, user, disabled }) {
+export default function CollectButton({ appID, disabled }) {
 
-    collect = async () => {
-        closeCrowdfunding(client, appID, user)
+    const context = useAppContext()
+    const algodClient = context["algodClient"]
+
+    const collect = async () => {
+        const connectedAccount = localStorage.getItem('connectedAccount')
+        closeCrowdfunding(algodClient, appID, connectedAccount)
     }
 
     return (
         <>
             <button
                 type="button"
-                className="m-auto w-48 text-center py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                 disabled={disabled}
                 onClick={collect}>Collect!
             </button>

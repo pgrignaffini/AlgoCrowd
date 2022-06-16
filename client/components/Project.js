@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { randomIntFromInterval, calculatePercentage, convertEpochToSpecificTimezone } from '../utils/Utilities'
 import API from '../APIs/API'
+import ClaimRefundsButton from './ClaimRefundsButton'
+import CollectButton from './CollectButton'
 
-export default function Project({ project }) {
+export default function Project({ project, type }) {
 
     const [totalInvested, setTotalInvested] = useState()
 
@@ -29,6 +31,7 @@ export default function Project({ project }) {
     const percentage = calculatePercentage(totalInvested, project.goal)
     const progress = parseInt((percentage * 4) / 100)
     const barProgress = progress === 0 ? `w-0 h-full text-center text-xs text-white bg-green-500 rounded-full` : `w-${progress}/4 h-full text-center text-xs text-white bg-green-500 rounded-full`
+
 
     return (
         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
@@ -73,6 +76,10 @@ export default function Project({ project }) {
                                     {percentage}%
                                 </div>
                             </div>
+                        </div>
+                        <div className="w-full text-center">
+                            {type === "funded" && <ClaimRefundsButton appID={project.appId} disabled={false} />}
+                            {type === "created" && <CollectButton appID={project.appId} disabled={true} />}
                         </div>
                     </div>
                 </div>

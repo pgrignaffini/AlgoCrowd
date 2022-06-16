@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { CONSTANTS } from "../constants/Constants";
 import algosdk from 'algosdk';
+import { useAppContext } from "../context/AppContext";
 
 
 export default function Home() {
 
-  const algodServer = CONSTANTS.baseServer
-  const token = CONSTANTS.algodToken // using .env.local to load environment variables
-  const port = CONSTANTS.port
-  const algodClient = new algosdk.Algodv2(token, algodServer, port);
+  // const algodServer = CONSTANTS.baseServer
+  // const token = CONSTANTS.algodToken // using .env.local to load environment variables
+  // const port = CONSTANTS.port
+  // const algodClient = new algosdk.Algodv2(token, algodServer, port);
+  const context = useAppContext()
+  const algodClient = context["algodClient"]
+
   const [account, setAccount] = useState()
 
   useEffect(() => {

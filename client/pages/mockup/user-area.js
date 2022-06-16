@@ -16,7 +16,7 @@ export default function UserArea() {
                         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
                             <div className="w-full block h-full">
                                 <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/1.jpg"
-                                     className="max-h-40 w-full object-cover"/>
+                                    className="max-h-40 w-full object-cover" />
                                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                                     <p className="text-indigo-500 text-md font-medium">
                                         Video
@@ -34,8 +34,8 @@ export default function UserArea() {
                                             <div className="flex items-center mt-4">
                                                 <a href="#" className="block relative">
                                                     <img alt="profil"
-                                                         src="https://www.tailwind-kit.com/images/person/6.jpg"
-                                                         className="mx-auto object-cover rounded-full h-10 w-10 "/>
+                                                        src="https://www.tailwind-kit.com/images/person/6.jpg"
+                                                        className="mx-auto object-cover rounded-full h-10 w-10 " />
                                                 </a>
                                                 <div className="flex flex-col justify-between ml-4 text-sm">
                                                     <p className="text-gray-800 dark:text-white">
@@ -48,8 +48,8 @@ export default function UserArea() {
                                                 </div>
                                                 <span
                                                     className="ml-64 text-xs font-medium inline-block py-1 px-2 uppercase rounded-full text-white bg-green-400">
-                                            Funding in progress
-                                        </span>
+                                                    Funding in progress
+                                                </span>
                                             </div>
 
                                             <div>
@@ -65,7 +65,7 @@ export default function UserArea() {
                                     </div>
                                     <div className="w-full text-center">
                                         <button type="button"
-                                                className="w-32 mt-4 mb-2 py-2 px-4  bg-gray-300 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                            className="w-32 mt-4 mb-2 py-2 px-4  bg-gray-300 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                                             Claim funds
                                         </button>
                                     </div>
@@ -75,7 +75,7 @@ export default function UserArea() {
                         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
                             <div className="w-full block h-full">
                                 <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/5.jpg"
-                                     className="max-h-40 w-full object-cover"/>
+                                    className="max-h-40 w-full object-cover" />
                                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                                     <p className="text-indigo-500 text-md font-medium">
                                         Sport
@@ -94,8 +94,8 @@ export default function UserArea() {
                                             <div className="flex items-center mt-4">
                                                 <a href="#" className="block relative">
                                                     <img alt="profil"
-                                                         src="https://www.riccardonegri.dev/_next/image?url=https%3A%2F%2Frandomuser.me%2Fapi%2Fportraits%2Fthumb%2Fmen%2F97.jpg&w=96&q=75"
-                                                         className="mx-auto object-cover rounded-full h-10 w-10 "/>
+                                                        src="https://www.riccardonegri.dev/_next/image?url=https%3A%2F%2Frandomuser.me%2Fapi%2Fportraits%2Fthumb%2Fmen%2F97.jpg&w=96&q=75"
+                                                        className="mx-auto object-cover rounded-full h-10 w-10 " />
                                                 </a>
                                                 <div className="flex flex-col justify-between ml-4 text-sm">
                                                     <p className="text-gray-800 dark:text-white">
@@ -108,8 +108,8 @@ export default function UserArea() {
                                                 </div>
                                                 <span
                                                     className="ml-64 text-xs font-medium inline-block py-1 px-2 uppercase rounded-full text-white bg-pink-500">
-                                            Funding completed
-                                        </span>
+                                                    Funding completed
+                                                </span>
                                             </div>
 
                                             <div>
@@ -124,7 +124,7 @@ export default function UserArea() {
                                         </div>
                                         <div className="w-full text-center">
                                             <button type="button"
-                                                    className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                                className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                                                 Claim funds
                                             </button>
                                         </div>
@@ -147,7 +147,7 @@ export default function UserArea() {
                         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
                             <div className="w-full block h-full">
                                 <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/3.jpg"
-                                     className="max-h-40 w-full object-cover"/>
+                                    className="max-h-40 w-full object-cover" />
                                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                                     <p className="text-indigo-500 text-md font-medium">
                                         School
@@ -166,8 +166,8 @@ export default function UserArea() {
                                             <div className="flex items-center mt-4">
                                                 <a href="#" className="block relative">
                                                     <img alt="profile"
-                                                         src="https://www.riccardonegri.dev/_next/image?url=https%3A%2F%2Frandomuser.me%2Fapi%2Fportraits%2Fthumb%2Fmen%2F20.jpg&w=96&q=75"
-                                                         className="mx-auto object-cover rounded-full h-10 w-10 "/>
+                                                        src="https://www.riccardonegri.dev/_next/image?url=https%3A%2F%2Frandomuser.me%2Fapi%2Fportraits%2Fthumb%2Fmen%2F20.jpg&w=96&q=75"
+                                                        className="mx-auto object-cover rounded-full h-10 w-10 " />
                                                 </a>
                                                 <div className="flex flex-col justify-between ml-4 text-sm">
                                                     <p className="text-gray-800 dark:text-white">
@@ -180,8 +180,8 @@ export default function UserArea() {
                                                 </div>
                                                 <span
                                                     className="ml-64 text-xs font-medium inline-block py-1 px-2 uppercase rounded-full text-white bg-green-400">
-                                            Funding in progress
-                                        </span>
+                                                    Funding in progress
+                                                </span>
                                             </div>
 
                                             <div>
@@ -201,7 +201,7 @@ export default function UserArea() {
                         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
                             <div className="w-full block h-full">
                                 <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/5.jpg"
-                                     className="max-h-40 w-full object-cover"/>
+                                    className="max-h-40 w-full object-cover" />
                                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                                     <p className="text-indigo-500 text-md font-medium">
                                         Sport
@@ -220,8 +220,8 @@ export default function UserArea() {
                                             <div className="flex items-center mt-4">
                                                 <a href="#" className="block relative">
                                                     <img alt="profil"
-                                                         src="https://www.riccardonegri.dev/_next/image?url=https%3A%2F%2Frandomuser.me%2Fapi%2Fportraits%2Fthumb%2Fmen%2F97.jpg&w=96&q=75"
-                                                         className="mx-auto object-cover rounded-full h-10 w-10 "/>
+                                                        src="https://www.riccardonegri.dev/_next/image?url=https%3A%2F%2Frandomuser.me%2Fapi%2Fportraits%2Fthumb%2Fmen%2F97.jpg&w=96&q=75"
+                                                        className="mx-auto object-cover rounded-full h-10 w-10 " />
                                                 </a>
                                                 <div className="flex flex-col justify-between ml-4 text-sm">
                                                     <p className="text-gray-800 dark:text-white">
@@ -234,8 +234,8 @@ export default function UserArea() {
                                                 </div>
                                                 <span
                                                     className="ml-64 text-xs font-medium inline-block py-1 px-2 uppercase rounded-full text-white bg-pink-500">
-                                            Funding completed
-                                        </span>
+                                                    Funding completed
+                                                </span>
                                             </div>
 
                                             <div>
@@ -255,7 +255,7 @@ export default function UserArea() {
                         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
                             <div className="w-full block h-full">
                                 <img alt="blog photo" src="https://www.tailwind-kit.com/images/blog/1.jpg"
-                                     className="max-h-40 w-full object-cover"/>
+                                    className="max-h-40 w-full object-cover" />
                                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                                     <p className="text-indigo-500 text-md font-medium">
                                         Video
@@ -273,8 +273,8 @@ export default function UserArea() {
                                             <div className="flex items-center mt-4">
                                                 <a href="#" className="block relative">
                                                     <img alt="profil"
-                                                         src="https://www.tailwind-kit.com/images/person/6.jpg"
-                                                         className="mx-auto object-cover rounded-full h-10 w-10 "/>
+                                                        src="https://www.tailwind-kit.com/images/person/6.jpg"
+                                                        className="mx-auto object-cover rounded-full h-10 w-10 " />
                                                 </a>
                                                 <div className="flex flex-col justify-between ml-4 text-sm">
                                                     <p className="text-gray-800 dark:text-white">
@@ -287,8 +287,8 @@ export default function UserArea() {
                                                 </div>
                                                 <span
                                                     className="ml-64 text-xs font-medium inline-block py-1 px-2 uppercase rounded-full text-white bg-yellow-500">
-                                            Funding not reached
-                                        </span>
+                                                    Funding not reached
+                                                </span>
                                             </div>
 
                                             <div>
@@ -309,7 +309,7 @@ export default function UserArea() {
                 </div>
 
             </div>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

@@ -16,7 +16,7 @@ export default function YourProjects({ projects }) {
                 </div>
             </div>
             <div className="grid grid-cols-1 gap-12">
-                <DisplayProjects projects={projects} />
+                <DisplayProjects projects={projects} type="created" />
             </div>
 
         </div>

@@ -1,18 +1,24 @@
 import React from 'react'
 import { sendRefunds } from "../utils/ContractOperations";
+import { useAppContext } from '../context/AppContext';
 
-export default function ClaimRefundsButton({ client, appID, user, disabled }) {
+export default function ClaimRefundsButton({ appID, disabled }) {
 
-    refund = async () => {
-        sendRefunds(client, appID, user)
+    const context = useAppContext()
+    const algodClient = context["algodClient"]
+
+    const refund = async () => {
+        // const connectedAccount = localStorage.getItem('connectedAccount')
+        // sendRefunds(algodClient, appID, connectedAccount)
+        console.log("click")
     }
 
     return (
         <>
             <button
                 type="button"
-                className="m-auto w-48 text-center py-4 px-6  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                disabled={disabled}
+                className="w-auto mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                disabled={false}
                 onClick={refund}>Get refunded!
             </button>
         </>

@@ -1,17 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { createApp, setupApp } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
-import { CONSTANTS } from "../constants/Constants";
 import API from "../APIs/API";
 
 
 export default function CreateProject() {
 
-    const algosdk = require("algosdk");
-    const algodServer = CONSTANTS.baseServer
-    const token = CONSTANTS.algodToken // using .env.local to load environment variables
-    const port = CONSTANTS.port
-    const algodClient = new algosdk.Algodv2(token, algodServer, port);
+    const context = useAppContext()
+    const algodClient = context["algodClient"]
     const [account, setAccount] = useState()
 
     useEffect(() => {

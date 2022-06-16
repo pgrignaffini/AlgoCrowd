@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Project from './Project'
 
-export default function DisplayProjects({ projects }) {
+export default function DisplayProjects({ projects, type }) {
 
     return (
         <>
@@ -14,7 +14,7 @@ export default function DisplayProjects({ projects }) {
                         query: project
                     }}>
                         <a>
-                            <Project project={project} />
+                            <Project project={project} type={type} />
                         </a>
                     </Link>
                 </div>
