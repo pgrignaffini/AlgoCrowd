@@ -21,7 +21,7 @@ export default function Projects() {
 
     return (
         <div className="w-full mx-auto xl:max-w-7xl lg:max-w-5xl md:max-w-3xl md:px-2 px-4 bg-white pt-12">
-            <ProjectsHeader />
+            <ProjectsHeader title="Latest projects" subtitle="The authenticity of every project is verified by our team" />
             <DisplayProjects projects={projects} />
         </div>
     )

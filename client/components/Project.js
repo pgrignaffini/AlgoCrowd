@@ -19,12 +19,10 @@ export default function Project({ project, type }) {
 
     const now = new Date().getTime()
     const isOver = now > project.end ? true : false
-    console.log("is over " + isOver)
     const status = isOver ? "ended" : "in progress"
     const finish = new Date(parseInt(project.end)).toString()
 
     const hasReachedGoal = totalInvested >= project.goal ? true : false
-    console.log("hasReachedGoal " + hasReachedGoal)
 
     const displayCreator = project.creatorAddress.substring(1, 3) + "..." + project.creatorAddress.substring(project.creatorAddress.length - 12, project.creatorAddress.length)
 
