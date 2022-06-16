@@ -18,8 +18,13 @@ export default function Project({ project, type }) {
     }, [])
 
     const now = new Date().getTime()
-    const status = now > project.end ? "ended" : "in progress"
+    const isOver = now > project.end ? true : false
+    console.log("is over " + isOver)
+    const status = isOver ? "ended" : "in progress"
     const finish = new Date(parseInt(project.end)).toString()
+
+    const hasReachedGoal = totalInvested >= project.goal ? true : false
+    console.log("hasReachedGoal " + hasReachedGoal)
 
     const displayCreator = project.creatorAddress.substring(1, 3) + "..." + project.creatorAddress.substring(project.creatorAddress.length - 12, project.creatorAddress.length)
 
@@ -66,10 +71,6 @@ export default function Project({ project, type }) {
                                     Funding {status}
                                 </span>
                             </div>
-
-                            <div>
-
-                            </div>
                             <div className="w-full h-4 bg-gray-400 rounded-full mt-3">
                                 <div
                                     className={barProgress}>
@@ -78,8 +79,8 @@ export default function Project({ project, type }) {
                             </div>
                         </div>
                         <div className="w-full text-center">
-                            {type === "funded" && <ClaimRefundsButton appID={project.appId} disabled={false} />}
-                            {type === "created" && <CollectButton appID={project.appId} disabled={true} />}
+                            {type === "funded" && <ClaimRefundsButton appID={project.appId} disabled={!(isOver && !hasReachedGoal)} />}
+                            {type === "created" && <CollectButton appID={project.appId} disabled={!(isOver && hasReachedGoal)} />}
                         </div>
                     </div>
                 </div>
