@@ -1,6 +1,7 @@
 import React from 'react'
 import Project from './Project'
 import Link from 'next/link'
+import DisplayProjects from './DisplayProjects'
 
 export default function FundedProjects({ projects }) {
 
@@ -14,25 +15,7 @@ export default function FundedProjects({ projects }) {
                 </div>
             </div>
             <div className="grid grid-cols-1 gap-12">
-                {projects.map((project) =>
-                (
-                    <div key={project.appId}>
-                        <Link href={{
-                            pathname: `/${encodeURIComponent(project.appId)}`,
-                            query: project
-                        }}>
-                            <a>
-                                <Project
-                                    appId={project.appId}
-                                    title={project.name}
-                                    description={project.description}
-                                    creator={project.creatorAddress}
-                                    end={project.end}
-                                    percentage={75} />
-                            </a>
-                        </Link>
-                    </div>
-                ))}
+                <DisplayProjects projects={projects} />
             </div>
         </div>
     )

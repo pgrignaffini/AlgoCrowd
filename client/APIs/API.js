@@ -102,7 +102,17 @@ async function getFundedApplicationFromFunderAddressAndAppId(funderAddress, appI
     throw responseBody;
 }
 
+async function getFundedAppAmountFromAppId(appId) {
+  const response = await fetch('/api/funded?appId=' + appId);
+  const responseBody = await response.json();
+  if (response.ok) {
+    return responseBody[0]
+  }
+  else
+    throw responseBody;
+}
 
-const API = { createApp, fundApp, getApplicationFromAppId, getAllApplications, getApplicationsFromCreatorAddress, getAllFundedApplicationsFromFunderAddress, getFundedApplicationFromFunderAddressAndAppId }
+
+const API = { createApp, fundApp, getFundedAppAmountFromAppId, getApplicationFromAppId, getAllApplications, getApplicationsFromCreatorAddress, getAllFundedApplicationsFromFunderAddress, getFundedApplicationFromFunderAddressAndAppId }
 
 export default API;

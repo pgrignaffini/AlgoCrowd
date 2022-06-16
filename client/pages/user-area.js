@@ -8,13 +8,10 @@ export default function UserArea() {
 
     const [yourProjects, setYourProjects] = useState([]);
     const [fundedProjects, setFundedProjects] = useState();
-    const [account, setAccount] = useState()
 
     useEffect(() => {
 
         const connectedAccount = localStorage.getItem('connectedAccount')
-        if (connectedAccount) setAccount(connectedAccount)
-        console.log("Account: " + connectedAccount)
 
         async function fetchYourProjects() {
             const data = await API.getApplicationsFromCreatorAddress(connectedAccount)

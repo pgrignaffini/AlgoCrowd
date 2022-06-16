@@ -1,20 +1,34 @@
-import React from 'react'
-import { randomIntFromInterval, timestampTodate } from '../utils/Utilities'
-import moment from 'moment'
+import React, { useState, useEffect } from 'react'
+import { randomIntFromInterval, calculatePercentage, convertEpochToSpecificTimezone } from '../utils/Utilities'
+import API from '../APIs/API'
 
-export default function Project({ appId, title, description, creator, end, percentage }) {
+export default function Project({ project }) {
+
+    const [totalInvested, setTotalInvested] = useState()
+
+    useEffect(() => {
+        async function getAmount() {
+            const amount = await API.getFundedAppAmountFromAppId(project.appId)
+            if (amount) setTotalInvested(parseFloat(amount.amount))
+            else setTotalInvested(0)
+        }
+        getAmount()
+    }, [])
 
     const now = new Date().getTime()
-    const status = now > end ? "ended" : "in progress"
-    console.log(end)
-    const finish = moment.unix(end).format('L');
+    const status = now > project.end ? "ended" : "in progress"
+    const finish = new Date(parseInt(project.end)).toString()
 
-    const displayCreator = creator.substring(1, 3) + "..." + creator.substring(creator.length - 12, creator.length)
+    const displayCreator = project.creatorAddress.substring(1, 3) + "..." + project.creatorAddress.substring(project.creatorAddress.length - 12, project.creatorAddress.length)
 
     const randomBlogNumber = randomIntFromInterval(1, 6)
     const blogSrc = `https://www.tailwind-kit.com/images/blog/${randomBlogNumber}.jpg`
     const randomPersonNumber = randomIntFromInterval(3, 10)
     const personSrc = `https://www.tailwind-kit.com/images/person/${randomPersonNumber}.jpg`
+
+    const percentage = calculatePercentage(totalInvested, project.goal)
+    const progress = parseInt((percentage * 4) / 100)
+    const barProgress = progress === 0 ? `w-0 h-full text-center text-xs text-white bg-green-500 rounded-full` : `w-${progress}/4 h-full text-center text-xs text-white bg-green-500 rounded-full`
 
     return (
         <div className="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-full cursor-pointer m-auto">
@@ -23,10 +37,10 @@ export default function Project({ appId, title, description, creator, end, perce
                     className="max-h-40 w-full object-cover" />
                 <div className="bg-white dark:bg-gray-800 w-full p-4">
                     <p className="text-gray-800 dark:text-white text-xl font-medium mb-2">
-                        {title}
+                        {project.name}
                     </p>
                     <p className="text-gray-500 dark:text-gray-300 font-light font-medium text-md">
-                        {description}
+                        {project.description}
                     </p>
 
                     <div>
@@ -55,7 +69,7 @@ export default function Project({ appId, title, description, creator, end, perce
                             </div>
                             <div className="w-full h-4 bg-gray-400 rounded-full mt-3">
                                 <div
-                                    className="w-3/4 h-full text-center text-xs text-white bg-green-500 rounded-full">
+                                    className={barProgress}>
                                     {percentage}%
                                 </div>
                             </div>
