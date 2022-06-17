@@ -5,6 +5,7 @@ import API from '../APIs/API';
 import Project from './Project';
 import ProjectsHeader from './ProjectsHeader';
 import { CONSTANTS } from '../constants/Constants';
+import {useToasts} from "react-toast-notifications";
 
 
 export default function FundProject({ project }) {
@@ -13,9 +14,9 @@ export default function FundProject({ project }) {
     const algodClient = context["algodClient"]
     const title = `Invest now on project ${project.name}!`
     const [account, setAccount] = useState()
-
+    const { addToast } = useToasts()
     // creators cannot fund their projects
-    const isCreator = String(account) === String(project.creatorAddress) ? true : false
+    const isCreator = String(account) === String(project.creatorAddress)
 
     useEffect(() => {
 
@@ -55,9 +56,37 @@ export default function FundProject({ project }) {
 
         const accountInfo = await algodClient.accountInformation(account).do();
         const isOptedIn = accountInfo["apps-local-state"].filter(app => String(app.id) === project.appId)
-        if (!isOptedIn.length) await optInApp(algodClient, parseInt(project.appId), account)
-        await sendFunds(algodClient, parseInt(project.appId), account, amount)
-        await API.fundApp(account, project.appId, amount)
+        if (!isOptedIn.length) {
+            try {
+                await optInApp(algodClient, parseInt(project.appId), account)
+                addToast("Opt-in successfully", {
+                    appearance: 'success',
+                    autoDismiss: false,
+                })
+            }
+            catch (e) {
+                addToast("Failed to opt-in", {
+                    appearance: 'error',
+                    autoDismiss: false,
+                })
+            }
+        }
+
+        try {
+            await sendFunds(algodClient, parseInt(project.appId), account, amount, addToast)
+            await API.fundApp(account, project.appId, amount)
+            addToast("Funds sent successfully", {
+                appearance: 'success',
+                autoDismiss: false,
+            })
+        }
+        catch (e) {
+            addToast("Failed to fund project", {
+                appearance: 'error',
+                autoDismiss: false,
+            })
+        }
+
     }
 
 

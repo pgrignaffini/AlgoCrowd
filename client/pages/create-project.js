@@ -3,6 +3,7 @@ import { createApp, setupApp } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
 import API from "../APIs/API";
 import { convert2seconds, dateToTimestamp } from "../utils/Utilities";
+import {useToasts} from "react-toast-notifications";
 
 
 export default function CreateProject() {
@@ -10,6 +11,7 @@ export default function CreateProject() {
     const context = useAppContext()
     const algodClient = context["algodClient"]
     const [account, setAccount] = useState()
+    const { addToast } = useToasts()
 
     useEffect(() => {
 
@@ -58,6 +60,8 @@ export default function CreateProject() {
         }
 
         const durationInSeconds = daysToSeconds(parseInt(data.duration))
+        const startTime = Date.now()
+        const endTime = startTime + durationInSeconds
         // console.log(data)
 
         // console.log(data.start)
@@ -66,9 +70,21 @@ export default function CreateProject() {
         // console.log(splitTime)
 
         if (account) {
-            const appId = await createApp(algodClient, account, parseInt(data.goal))
-            await setupApp(algodClient, appId, account)
-            appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, parseInt(data.goal)) : alert("Transaction failed!")
+            try {
+                const appId = await createApp(algodClient, account, parseInt(data.goal))
+                await setupApp(algodClient, appId, account)
+                appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, parseInt(data.goal)) : alert("Transaction failed!")
+                addToast("Created app successfully. App ID: " + appId, {
+                    appearance: 'success',
+                    autoDismiss: false,
+                })
+            }
+            catch (e) {
+                addToast("Failed to create app", {
+                    appearance: 'error',
+                    autoDismiss: false,
+                })
+            }
         } else { alert("You need to connect your account first") }
     }
 

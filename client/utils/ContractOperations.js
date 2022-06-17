@@ -5,6 +5,11 @@ import { clear } from '../constants/Clear';
 import { Buffer } from "buffer";
 import { CONSTANTS } from '../constants/Constants';
 
+const checkConfirmed = (confirmedTxn) => {
+    if(confirmedTxn === null || confirmedTxn === undefined || confirmedTxn["confirmed-round"] === null || confirmedTxn["confirmed-round"] === undefined || confirmedTxn["confirmed-round"] === "") {
+        throw "Transaction not confirmed"
+    }
+}
 
 const compileTeal = async (client, tealFile) => {
     try {
@@ -156,6 +161,7 @@ export async function setupApp(client, appID, creator) {
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTxs[0]["txID"], 4);
     console.log("tx confirmed " + JSON.stringify(confirmedTxn["confirmed-round"]))
 
+    checkConfirmed(confirmedTxn)
 }
 
 export async function sendFunds(client, appID, funder, fundingAmount) {
@@ -218,6 +224,7 @@ export async function sendFunds(client, appID, funder, fundingAmount) {
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTxs[0]["txID"], 4);
     console.log("tx confirmed: " + confirmedTxn["confirmed-round"])
 
+    checkConfirmed(confirmedTxn)
 }
 
 // suggestedParams = client.suggested_params()
@@ -271,6 +278,7 @@ export async function sendRefunds(client, appID, user) {
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTx[0]["txID"], 4);
     console.log("confirmed: " + confirmedTxn["confirmed-round"])
 
+    checkConfirmed(confirmedTxn)
 }
 
 export async function closeCrowdfunding(client, appID, user) {
@@ -305,6 +313,7 @@ export async function closeCrowdfunding(client, appID, user) {
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTx[0]["txID"], 4);
     console.log("confirmed: " + confirmedTxn["confirmed-round"])
 
+    checkConfirmed(confirmedTxn)
 }
 
 export async function optInApp(client, appID, user) {
@@ -339,4 +348,5 @@ export async function optInApp(client, appID, user) {
     let confirmedTxn = await algosdk.waitForConfirmation(client, signedTx[0]["txID"], 4);
     console.log("confirmed: " + confirmedTxn["confirmed-round"])
 
+    checkConfirmed(confirmedTxn)
 }
