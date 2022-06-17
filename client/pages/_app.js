@@ -29,7 +29,6 @@ function MyApp({Component, pageProps}) {
             <AppWrapper>
                 <ToastProvider>
                     <Header/>
-                    <FormWithToasts/>
                     <Component {...pageProps} />
                     <Footer/>
                 </ToastProvider>
