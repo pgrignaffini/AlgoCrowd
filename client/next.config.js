@@ -6,7 +6,7 @@ module.exports = {
     return [
       {
         source: '/api/:slug*',
-        destination: 'http://localhost:3001/api/:slug*' // Proxy to Backend
+        destination: 'http://stormy-sea-92917.herokuapp.com/api/:slug*' // Proxy to Backend
       }
     ]
   }
