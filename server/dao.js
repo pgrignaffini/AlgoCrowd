@@ -84,8 +84,8 @@ exports.getApplicationFromAppId = (appId) => {
 	});
 };
 
-//Get funded apps by a single funder
-exports.getAllFundedAppsFromFunderAddress = (funderAddress) => {
+//Get all funded applications from funderAddress
+exports.getAllFundedApplicationsFromFunderAddress = (funderAddress) => {
 	return new Promise((resolve, reject) => {
 		const sql = "SELECT DISTINCT appId FROM fundedApplication WHERE funderAddress = '" + funderAddress + "'";
 		db.all(sql, [], function (err, rows) {
@@ -99,7 +99,7 @@ exports.getAllFundedAppsFromFunderAddress = (funderAddress) => {
 };
 
 //Get funded amount from a single funder relating to a single app
-exports.getFundedAppAmountFromFunderAddressAndAppId = (funderAddress, appId) => {
+exports.getFundedApplicationAmountFromFunderAddressAndAppId = (funderAddress, appId) => {
 	return new Promise((resolve, reject) => {
 		const sql = "SELECT sum(amount) as amount FROM fundedApplication WHERE funderAddress = '" + funderAddress + "' AND appId = '" + appId + "' GROUP BY appId";
 		db.all(sql, [], function (err, rows) {
@@ -112,7 +112,7 @@ exports.getFundedAppAmountFromFunderAddressAndAppId = (funderAddress, appId) => 
 	});
 };
 
-exports.getFundedAppAmountFromAppId = (appId) => {
+exports.getFundedApplicationAmountFromAppId = (appId) => {
 	return new Promise((resolve, reject) => {
 		const sql = "SELECT sum(amount) as amount FROM fundedApplication WHERE appId = '" + appId + "' GROUP BY appId";
 		db.all(sql, [], function (err, rows) {
@@ -125,4 +125,34 @@ exports.getFundedAppAmountFromAppId = (appId) => {
 	});
 };
 
-//"SELECT * FROM application WHERE creatorAddress = '" + creatorAddress + "' AND start = '" + start + "'"
+
+//Get all the applications the user has invested in (amount included) and related app info
+exports.getAllFundedApplicationsAndAppsInfoFromFunderAddress = (funderAddress) => {
+	return new Promise((resolve, reject) => {
+		const sql = "SELECT application.creatorAddress, application.name, application.description, application.imageUrl, application.start, application.end, application.goal,  sum(fundedApplication.amount) as funded FROM application JOIN fundedApplication ON application.appId=fundedApplication.appId WHERE fundedApplication.funderAddress = '" + funderAddress + "' GROUP BY application.appId";
+		db.all(sql, [], function (err, rows) {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve(rows);
+		});
+	});
+};
+
+//Get funded amount plus appInfp from funderAddress related to a single app
+exports.getFundedAmountAndAppInfoFromFunderAddressAndAppId = (funderAddress, appId) => {
+	return new Promise((resolve, reject) => {
+		const sql = "SELECT application.creatorAddress, application.name, application.description, application.imageUrl, application.start, application.end, application.goal,  sum(fundedApplication.amount) as funded FROM application JOIN fundedApplication ON application.appId=fundedApplication.appId WHERE fundedApplication.appId = '" + appId + "' AND fundedApplication.funderAddress = '" + funderAddress + "' GROUP BY application.appId";
+		db.all(sql, [], function (err, rows) {
+			if (err) {
+				reject(err);
+				return;
+			}
+			resolve(rows);
+		});
+	});
+};
+
+
+

@@ -11,7 +11,7 @@ export default function Project({ project, type }) {
 
     useEffect(() => {
         async function getAmount() {
-            const amount = await API.getFundedAppAmountFromAppId(project.appId)
+            const amount = await API.getFundedApplicationAmountFromAppId(project.appId)
             if (amount) setTotalInvested(parseFloat(amount.amount))
             else setTotalInvested(0)
         }

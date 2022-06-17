@@ -78,15 +78,33 @@ app.get('/api/application', async (req, res) => {
 });
 
 app.get('/api/funder', async (req, res) => {
+  console.log("AppInfo=" + req.query.appInfo + " appId = " + req.query.appId)
   try {
     let result = null
-    if (req.query.appId == null)
-      //Get all funded apps from funderAddress
-      result = await dao.getAllFundedAppsFromFunderAddress(req.query.funderAddress)
-    else {
-      //Get the amount invested in a single app from a funderAddress
-      result = await dao.getFundedAppAmountFromFunderAddressAndAppId(req.query.funderAddress, req.query.appId)
-      console.log(result)
+    switch(req.query.appId){
+      case(undefined):
+
+      //ALL THE APPS
+        if(req.query.appInfo == 1){
+          //Get funded amount plus appInfp from funderAddress related to a single app
+          result = await dao.getAllFundedApplicationsAndAppsInfoFromFunderAddress(req.query.funderAddress)
+        }
+        else{
+          //Get all funded apps from funderAddress
+          result = await dao.getAllFundedApplicationsFromFunderAddress(req.query.funderAddress)
+        }
+        break
+        
+      //JUST ONE APP
+      default:
+        if(req.query.appInfo == 1){
+          //Get funded amount plus app info from funderAddress and appId
+          result = await dao.getFundedAmountAndAppInfoFromFunderAddressAndAppId(req.query.funderAddress, req.query.appId)
+        }
+        else{
+          //Get funded amount from funderAddress and appId
+          result = await dao.getFundedApplicationAmountFromFunderAddressAndAppId(req.query.funderAddress, req.query.appId)
+        }
     }
     res.json(result);
   } catch (err) {
@@ -96,7 +114,7 @@ app.get('/api/funder', async (req, res) => {
 
 app.get('/api/funded', async (req, res) => {
   try {
-    let apps = await dao.getFundedAppAmountFromAppId(req.query.appId)
+    let apps = await dao.getFundedApplicationAmountFromAppId(req.query.appId)
     res.json(apps);
   } catch (err) {
     res.status(500).end();

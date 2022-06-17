@@ -23,8 +23,16 @@ export default function TestButton() {
         //console.log(fundedApp)
 
         //GET TOTAL AMOUNT FUNDED FROM A SINGLE FUNDER RELATED TO A SINGLE APP
-        //let amount = await API.getFundedApplicationFromFunderAddressAndAppId("funderAddress", "AppId")
+        //let amount = await API.getFundedApplicationAmountFromFunderAddressAndAppId("funderAddress", "AppId")
         //console.log("The funded amount is: " + amount)
+
+        //GET ALL THE APPLICATIONS THE USER HAS INVESTED IN (AMOUNT INCLUDED) AND RELATED APP INFO
+        //let fundedApp = await API.getAllFundedApplicationsAndAppsInfoFromFunderAddress("funderAddress")
+        //console.log(fundedApp)
+
+        //GET FUNDED AMOUNT PLUS APP INFO FROM FUNDER ADDRESS RELATED TO A SINGLE APP
+        //let fundedApp = await API.getFundedAmountAndAppInfoFromFunderAddressAndAppId("funderAddress", "appId")
+        //console.log(fundedApp)
 
     }
 

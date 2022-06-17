@@ -82,6 +82,7 @@ async function getApplicationFromAppId(appId) {
     throw responseBody;
 }
 
+//Get all funded applications from funderAddress
 async function getAllFundedApplicationsFromFunderAddress(funderAddress) {
   const response = await fetch('/api/funder?funderAddress=' + funderAddress);
   const responseBody = await response.json();
@@ -92,7 +93,8 @@ async function getAllFundedApplicationsFromFunderAddress(funderAddress) {
     throw responseBody;
 }
 
-async function getFundedApplicationFromFunderAddressAndAppId(funderAddress, appId) {
+//Get funded amount from a single funder relating to a single app
+async function getFundedApplicationAmountFromFunderAddressAndAppId(funderAddress, appId) {
   const response = await fetch('/api/funder?funderAddress=' + funderAddress + '&appId=' + appId);
   const responseBody = await response.json();
   if (response.ok) {
@@ -102,7 +104,7 @@ async function getFundedApplicationFromFunderAddressAndAppId(funderAddress, appI
     throw responseBody;
 }
 
-async function getFundedAppAmountFromAppId(appId) {
+async function getFundedApplicationAmountFromAppId(appId) {
   const response = await fetch('/api/funded?appId=' + appId);
   const responseBody = await response.json();
   if (response.ok) {
@@ -112,7 +114,40 @@ async function getFundedAppAmountFromAppId(appId) {
     throw responseBody;
 }
 
+//Get all the applications the user has invested in (amount included) and related app info
+async function getAllFundedApplicationsAndAppsInfoFromFunderAddress(funderAddress) {
+  const response = await fetch('/api/funder?funderAddress=' + funderAddress + '&appInfo=1');
+  const responseBody = await response.json();
+  if (response.ok) {
+    return responseBody
+  }
+  else
+    throw responseBody;
+}
 
-const API = { createApp, fundApp, getFundedAppAmountFromAppId, getApplicationFromAppId, getAllApplications, getApplicationsFromCreatorAddress, getAllFundedApplicationsFromFunderAddress, getFundedApplicationFromFunderAddressAndAppId }
+//Get funded amount plus appInfp from funderAddress related to a single app
+async function getFundedAmountAndAppInfoFromFunderAddressAndAppId(funderAddress, appId) {
+  const response = await fetch('/api/funder?funderAddress=' + funderAddress + '&appId=' + appId + '&appInfo=1');
+  const responseBody = await response.json();
+  if (response.ok) {
+    return responseBody
+  }
+  else
+    throw responseBody;
+}
+
+
+const API = { 
+  createApp,
+  fundApp, 
+  getFundedApplicationAmountFromAppId, 
+  getApplicationFromAppId, 
+  getAllApplications, 
+  getApplicationsFromCreatorAddress, 
+  getAllFundedApplicationsFromFunderAddress, 
+  getFundedApplicationAmountFromFunderAddressAndAppId, 
+  getAllFundedApplicationsAndAppsInfoFromFunderAddress, 
+  getFundedAmountAndAppInfoFromFunderAddressAndAppId 
+}
 
 export default API;
