@@ -33,7 +33,6 @@ export default function TestButton() {
         //GET FUNDED AMOUNT PLUS APP INFO FROM FUNDER ADDRESS RELATED TO A SINGLE APP
         //let fundedApp = await API.getFundedAmountAndAppInfoFromFunderAddressAndAppId("funderAddress", "appId")
         //console.log(fundedApp)
-
     }
 
 

@@ -119,12 +119,14 @@ const readGlobalState = async (algodClient, appId) => {
 
 export const readTotalFundedFromGlobalState = async (algodClient, appId) => {
     const gstate = await readGlobalState(algodClient, appId)
-    const total_funded = gstate.filter(e => e.key === CONSTANTS.total_funded_key);
-    return total_funded[0]["value"]["uint"]
+    const total_funded = gstate?.filter(e => e.key === CONSTANTS.total_funded_key);
+    if (total_funded) return total_funded[0]["value"]["uint"]
+    else return 0
 }
 
 export const readGoalFromGlobalState = async (algodClient, appId) => {
     const gstate = await readGlobalState(algodClient, appId)
-    const total_funded = gstate.filter(e => e.key === CONSTANTS.goal_key);
-    return total_funded[0]["value"]["uint"]
+    const total_funded = gstate?.filter(e => e.key === CONSTANTS.goal_key);
+    if (total_funded) return total_funded[0]["value"]["uint"]
+    else return 0
 }

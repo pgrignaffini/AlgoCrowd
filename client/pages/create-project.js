@@ -47,7 +47,8 @@ export default function CreateProject() {
             goal: event.target.goal.value,
             duration: event.target.duration.value,
             image: event.target.image.value,
-            desc: event.target.desc.value
+            desc: event.target.desc.value,
+            end: event.target.end.value
         }
 
         if (data.name.length === 0 || data.goal.length === 0 || data.duration.length === 0) {
@@ -109,9 +110,9 @@ export default function CreateProject() {
                                     </div>
                                     <div className="flex flex-col mb-2">
                                         <div className=" relative ">
-                                            <input
+                                            <input id="end"
                                                 className="py-2 px-3 rounded-lg border-2 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                type="datetime-local" placeholder="Input 3" />
+                                                type="datetime-local" placeholder="End" />
                                         </div>
                                     </div>
                                     <div className="flex flex-col mb-2">
