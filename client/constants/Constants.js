@@ -1,10 +1,13 @@
 
 export const CONSTANTS = {
+
     algodToken: { "X-API-Key": process.env.NEXT_PUBLIC_API_KEY },
     baseServer: 'https://testnet-algorand.api.purestake.io/ps2/',
     port: '',
-    APP_ID: 92741521,
+    APP_ID: 95544395,
     explorer: 'https://testnet.algoexplorer.io/application/76971672',
     algocrowd: 'XOBID66KBZ4C4ZZLEQGCHK2L2AIRCOS2XCS726XDCEJRJYSZWTZ64JN3RQ',
-    PLATFORM_FEE: 5000
+    PLATFORM_FEE: 0.005,
+    total_funded_key: "dG90YWxfZnVuZGVk",
+    goal_key: "Z29hbA=="
 }

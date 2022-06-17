@@ -9,7 +9,7 @@ export default function ClaimRefundsButton({ appID, disabled }) {
 
     const refund = async () => {
         const connectedAccount = localStorage.getItem('connectedAccount')
-        sendRefunds(algodClient, parseInt(appID), connectedAccount)
+        await sendRefunds(algodClient, parseInt(appID), connectedAccount)
     }
 
     return (

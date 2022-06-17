@@ -40,7 +40,7 @@ export default function CreateProject() {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault()
 
-
+        console.log(event.target)
         // Get data from the form.
         const data = {
             name: event.target.name.value,
@@ -60,11 +60,11 @@ export default function CreateProject() {
         const startTime = new Date().getTime()
         const endTime = startTime + durationInSeconds * 1000
 
-        if (account) {
-            const appId = await createApp(algodClient, account, parseInt(data.goal))
-            await setupApp(algodClient, appId, account)
-            appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, 1) : alert("Transaction failed!")
-        } else { alert("You need to connect your account first") }
+        // if (account) {
+        //     const appId = await createApp(algodClient, account, parseInt(data.goal))
+        //     await setupApp(algodClient, appId, account)
+        //     appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, parseInt(data.goal)) : alert("Transaction failed!")
+        // } else { alert("You need to connect your account first") }
     }
 
     return (
@@ -105,6 +105,13 @@ export default function CreateProject() {
                                             <input type="text" id="desc"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                                 name="Description" placeholder="Description" required />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col mb-2">
+                                        <div className=" relative ">
+                                            <input
+                                                className="py-2 px-3 rounded-lg border-2 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                                type="datetime-local" placeholder="Input 3" />
                                         </div>
                                     </div>
                                     <div className="flex flex-col mb-2">

@@ -102,18 +102,29 @@ const noop = async (action) => {
     }
 };
 
-const readGlobalState = async () => {
+const readGlobalState = async (algodClient, appId) => {
     try {
         let applicationInfoResponse = await algodClient
-            .getApplicationByID(CONSTANTS.APP_ID)
+            .getApplicationByID(appId)
             .do();
         let globalStateTemp = applicationInfoResponse["params"]["global-state"];
-        console.log("Global value raw: " + JSON.stringify(globalStateTemp));
-        console.log("Value: " + globalStateTemp[0]["value"]["uint"]);
-        globalStateTemp
-            ? setGlobalState(globalStateTemp[0]["value"]["uint"])
-            : "";
+        // console.log("Global value raw: " + JSON.stringify(globalStateTemp));
+        // console.log("Value: " + globalStateTemp[0]["value"]["uint"]);
+        return globalStateTemp
     } catch (err) {
         console.log(err);
     }
+
 };
+
+export const readTotalFundedFromGlobalState = async (algodClient, appId) => {
+    const gstate = await readGlobalState(algodClient, appId)
+    const total_funded = gstate.filter(e => e.key === CONSTANTS.total_funded_key);
+    return total_funded[0]["value"]["uint"]
+}
+
+export const readGoalFromGlobalState = async (algodClient, appId) => {
+    const gstate = await readGlobalState(algodClient, appId)
+    const total_funded = gstate.filter(e => e.key === CONSTANTS.goal_key);
+    return total_funded[0]["value"]["uint"]
+}

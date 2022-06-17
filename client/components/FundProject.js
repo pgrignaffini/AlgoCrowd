@@ -4,6 +4,7 @@ import { optInApp, sendFunds } from "../utils/ContractOperations";
 import API from '../APIs/API';
 import Project from './Project';
 import ProjectsHeader from './ProjectsHeader';
+import { CONSTANTS } from '../constants/Constants';
 
 
 export default function FundProject({ project }) {
@@ -49,6 +50,8 @@ export default function FundProject({ project }) {
         }
 
         let amount = parseFloat(data.amount)
+        amount -= CONSTANTS.PLATFORM_FEE
+        console.log("Amount: " + amount)
 
         const accountInfo = await algodClient.accountInformation(account).do();
         const isOptedIn = accountInfo["apps-local-state"].filter(app => String(app.id) === project.appId)
@@ -75,7 +78,7 @@ export default function FundProject({ project }) {
                         <div className="w-full text-center">
                             <button type="submit"
                                 className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg disabled:opacity-25 "
-                                disabled={isCreator}>
+                                disabled={false}>
                                 Send funds
                             </button>
                         </div>

@@ -1,38 +1,48 @@
 import React, { useState, useEffect } from 'react'
 import { randomIntFromInterval, calculatePercentage } from '../utils/Utilities'
-import API from '../APIs/API'
 import ClaimRefundsButton from './ClaimRefundsButton'
 import CollectButton from './CollectButton'
 import Link from 'next/link'
+import { useAppContext } from '../context/AppContext'
+import { readGoalFromGlobalState, readTotalFundedFromGlobalState } from '../utils/TxOperations'
+import algosdk from 'algosdk'
 
 export default function Project({ project, type }) {
 
+    const context = useAppContext()
+    const algodClient = context["algodClient"]
     const [totalInvested, setTotalInvested] = useState()
+    const [goal, setGoal] = useState()
 
     useEffect(() => {
-        async function getAmount() {
-            const amount = await API.getFundedAppAmountFromAppId(project.appId)
-            if (amount) setTotalInvested(parseFloat(amount.amount))
-            else setTotalInvested(0)
+        async function getFundingInfo() {
+            let fetchedGoal = await readGoalFromGlobalState(algodClient, parseInt(project.appId))
+            fetchedGoal = algosdk.microalgosToAlgos(fetchedGoal)
+            setGoal(fetchedGoal)
+            let fetchedTotalInvested = await readTotalFundedFromGlobalState(algodClient, parseInt(project.appId))
+            fetchedTotalInvested = algosdk.microalgosToAlgos(fetchedTotalInvested)
+            setTotalInvested(fetchedTotalInvested)
         }
-        getAmount()
-    }, [])
+
+        getFundingInfo()
+    }, [project.appId])
 
     const now = new Date().getTime()
     const isOver = now > project.end ? true : false
     const status = isOver ? "ended" : "in progress"
     const finish = new Date(parseInt(project.end)).toString()
+    const creatorAddress = project.creatorAddress
 
-    const hasReachedGoal = totalInvested >= project.goal ? true : false
+    const hasReachedGoal = totalInvested >= goal ? true : false
 
-    const displayCreator = project.creatorAddress.substring(1, 3) + "..." + project.creatorAddress.substring(project.creatorAddress.length - 12, project.creatorAddress.length)
+    const displayCreator = creatorAddress.substring(1, 3) + "..." + creatorAddress.substring(project.creatorAddress.length - 12, creatorAddress.length)
 
     const randomBlogNumber = randomIntFromInterval(1, 6)
     const blogSrc = `https://www.tailwind-kit.com/images/blog/${randomBlogNumber}.jpg`
     const randomPersonNumber = randomIntFromInterval(3, 10)
     const personSrc = `https://www.tailwind-kit.com/images/person/${randomPersonNumber}.jpg`
 
-    const percentage = calculatePercentage(totalInvested, project.goal)
+    const percentage = calculatePercentage(totalInvested, goal)
     const progress = parseInt((percentage * 4) / 100)
     const barProgress = progress === 0 ? `w-0 h-full text-center text-xs text-white bg-green-500 rounded-full` : `w-${progress}/4 h-full text-center text-xs text-white bg-green-500 rounded-full`
 
@@ -63,6 +73,9 @@ export default function Project({ project, type }) {
                                         className="mx-auto object-cover rounded-full h-10 w-10 " />
                                 </a>
                                 <div className="flex flex-col justify-between ml-4 text-sm">
+                                    <p className="text-gray-400 dark:text-gray-300">
+                                        App ID: {project.appId}
+                                    </p>
                                     <p className="text-gray-400 dark:text-gray-300">
                                         {displayCreator}
                                     </p>
