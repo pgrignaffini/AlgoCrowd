@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useAppContext } from '../context/AppContext'
 import { readGoalFromGlobalState, readTotalFundedFromGlobalState } from '../utils/TxOperations'
 import algosdk from 'algosdk'
-import { parseISO, format } from 'date-fns'
+import {format} from 'date-fns'
 
 export default function Project({ project, type }) {
 
@@ -31,7 +31,8 @@ export default function Project({ project, type }) {
     const now = new Date().getTime()
     const isOver = now > project.end ? true : false
     const status = isOver ? "ended" : "active"
-    const finish = format((new Date(parseInt(project.end))), "LLLL d, yyyy - hh:mm")
+    let finish = new Date(parseInt(project.end)).toString()
+    finish = (finish!=undefined) ? format(finish, "LLLL d, yyyy - hh:mm") : finish
     const creatorAddress = project.creatorAddress
 
     const hasReachedGoal = totalInvested >= goal ? true : false
@@ -68,7 +69,7 @@ export default function Project({ project, type }) {
                     <div>
                         <div className="bg-white rounded-lg block py-2 px-2 m-auto">
                             <div className="flex items-center mt-2">
-                                <a href="#" className="ml-2 block relative">
+                                <a href="#" className="col block relative">
                                     <img alt="profil" src={personSrc}
                                         className="mx-auto object-cover rounded-full h-10 w-10 " />
                                 </a>
@@ -84,7 +85,7 @@ export default function Project({ project, type }) {
                                     </p>
                                 </div>
                                 <span
-                                    className={"ml-40 relative text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status == 'ended' ? "bg-red-400" : "bg-green-400")}>
+                                    className={"ml-40 text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status == 'ended' ? "bg-red-400" : "bg-green-400")}>
                                     {status}
                                 </span>
                             </div>
