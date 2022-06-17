@@ -24,7 +24,8 @@ const compileTeal = async (client, tealFile) => {
 // create unsigned transaction
 export async function createApp(client, creator, goal) {
 
-    goal *= 1000000
+    goal = algosdk.algosToMicroalgos(goal)
+
     const localInts = 1;
     const localBytes = 1;
     const globalInts = 14;
@@ -163,14 +164,15 @@ export async function sendFunds(client, appID, funder, fundingAmount) {
     let params = await client.getTransactionParams().do();
 
     //convert to Algos
-    fundingAmount *= 1000000
+    fundingAmount = algosdk.algosToMicroalgos(fundingAmount)
+    console.log(fundingAmount)
 
-    let fundTxn = algosdk.makePaymentTxnWithSuggestedParams(funder, appAddr, fundingAmount - CONSTANTS.PLATFORM_FEE, undefined, new Uint8Array(0), params)
+    let fundTxn = algosdk.makePaymentTxnWithSuggestedParams(funder, appAddr, fundingAmount, undefined, new Uint8Array(0), params)
     console.log("FUND TRANSACTION -> " + fundTxn)
     let fundTxnId = fundTxn.txID().toString();
     console.log("FUND app txn id: " + fundTxnId)
 
-    let payFeesTxn = algosdk.makePaymentTxnWithSuggestedParams(funder, CONSTANTS.algocrowd, CONSTANTS.PLATFORM_FEE, undefined, new Uint8Array(0), params)
+    let payFeesTxn = algosdk.makePaymentTxnWithSuggestedParams(funder, CONSTANTS.algocrowd, algosdk.algosToMicroalgos(CONSTANTS.PLATFORM_FEE), undefined, new Uint8Array(0), params)
     console.log("PAY FEES TRANSACTION -> " + payFeesTxn)
     let payFeesTxnId = payFeesTxn.txID().toString();
     console.log("PAY FEES txn id: " + payFeesTxnId)
