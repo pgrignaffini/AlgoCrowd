@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { createApp, setupApp } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
 import API from "../APIs/API";
+import { convert2seconds, dateToTimestamp } from "../utils/Utilities";
 
 
 export default function CreateProject() {
@@ -48,6 +49,7 @@ export default function CreateProject() {
             duration: event.target.duration.value,
             image: event.target.image.value,
             desc: event.target.desc.value,
+            start: event.target.start.value,
             end: event.target.end.value
         }
 
@@ -56,16 +58,18 @@ export default function CreateProject() {
         }
 
         const durationInSeconds = daysToSeconds(parseInt(data.duration))
-        console.log(data)
+        // console.log(data)
 
-        const startTime = new Date().getTime()
-        const endTime = startTime + durationInSeconds * 1000
+        // console.log(data.start)
 
-        // if (account) {
-        //     const appId = await createApp(algodClient, account, parseInt(data.goal))
-        //     await setupApp(algodClient, appId, account)
-        //     appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, parseInt(data.goal)) : alert("Transaction failed!")
-        // } else { alert("You need to connect your account first") }
+        // const splitTime = data.start.split("T")
+        // console.log(splitTime)
+
+        if (account) {
+            const appId = await createApp(algodClient, account, parseInt(data.goal))
+            await setupApp(algodClient, appId, account)
+            appId ? await API.createApp(String(appId), account, data.name, data.desc, data.image, startTime, endTime, parseInt(data.goal)) : alert("Transaction failed!")
+        } else { alert("You need to connect your account first") }
     }
 
     return (
@@ -86,26 +90,33 @@ export default function CreateProject() {
                                         <div className=" relative ">
                                             <input type="text" id="name"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="Name" placeholder="Project name" required />
+                                                name="Name" placeholder="Project name" />
                                         </div>
                                     </div>
                                     <div className="flex gap-4 mb-2">
                                         <div className=" relative ">
                                             <input type="number" id="goal"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="Goal" placeholder="Goal (algo)" required />
+                                                name="Goal" placeholder="Goal (algo)" />
                                         </div>
                                         <div className=" relative ">
                                             <input type="number" id="duration"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="Duration" placeholder="Duration (days)" required />
+                                                name="Duration" placeholder="Duration (days)" />
                                         </div>
                                     </div>
                                     <div className="flex flex-col mb-2">
                                         <div className=" relative ">
                                             <input type="text" id="desc"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="Description" placeholder="Description" required />
+                                                name="Description" placeholder="Description" />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col mb-2">
+                                        <div className=" relative ">
+                                            <input id="start"
+                                                className="py-2 px-3 rounded-lg border-2 mt-1 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                                type="datetime-local" placeholder="start" />
                                         </div>
                                     </div>
                                     <div className="flex flex-col mb-2">
@@ -119,7 +130,7 @@ export default function CreateProject() {
                                         <div className=" relative ">
                                             <input type="text" id="image"
                                                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                                name="Image" placeholder="Image URL" required />
+                                                name="Image" placeholder="Image URL" />
                                         </div>
                                     </div>
                                     <div className="flex w-full my-4">
