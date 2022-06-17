@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import { createApp, setupApp } from "../../utils/ContractOperations";
-import { useAppContext } from '../../context/AppContext';
-import API from "../../APIs/API";
-import { dateToTimestamp } from "../../utils/Utilities";
+import { createApp, setupApp } from "../utils/ContractOperations";
+import { useAppContext } from '../context/AppContext';
+import API from "../APIs/API";
+import { dateToTimestamp } from "../utils/Utilities";
 import { useToasts } from "react-toast-notifications";
 
 
@@ -47,7 +47,7 @@ export default function CreateProject() {
             image: event.target.image.value,
         }
 
-        if (data.name.length === 0 || data.goal.length === 0) {
+        if (data.name.length === 0 || data.goal.length === 0 || data.start > data.end) {
             return
         }
 

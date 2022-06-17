@@ -35,14 +35,14 @@ export default function Project({ project, type }) {
 
     const hasReachedGoal = totalInvested >= goal ? true : false
 
-    const displayCreator = creatorAddress.substring(1, 3) + "..." + creatorAddress.substring(project.creatorAddress.length - 12, creatorAddress.length)
+    const displayCreator = creatorAddress ? creatorAddress.substring(1, 3) + "..." + creatorAddress.substring(creatorAddress.length - 12, creatorAddress.length) : ""
 
     const randomBlogNumber = randomIntFromInterval(1, 6)
     const blogSrc = `https://www.tailwind-kit.com/images/blog/${randomBlogNumber}.jpg`
     const randomPersonNumber = randomIntFromInterval(3, 10)
     const personSrc = `https://www.tailwind-kit.com/images/person/${randomPersonNumber}.jpg`
 
-    const percentage = calculatePercentage(totalInvested, goal)
+    const percentage = parseInt(calculatePercentage(totalInvested, goal))
     const progress = parseInt((percentage * 4) / 100)
     const barProgress = progress === 0 ? `w-0 h-full text-center text-xs text-white bg-green-500 rounded-full` : `w-${progress}/4 h-full text-center text-xs text-white bg-green-500 rounded-full`
 

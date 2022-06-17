@@ -17,6 +17,8 @@ export default function FundProject({ project }) {
     const { addToast } = useToasts()
     // creators cannot fund their projects
     const isCreator = String(account) === String(project.creatorAddress)
+    const now = new Date().getTime()
+    const isOver = now > project.end ? true : false
 
     useEffect(() => {
 
@@ -107,7 +109,7 @@ export default function FundProject({ project }) {
                         <div className="w-full text-center">
                             <button type="submit"
                                 className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg disabled:opacity-25 "
-                                disabled={false}>
+                                disabled={isCreator || isOver}>
                                 Send funds
                             </button>
                         </div>

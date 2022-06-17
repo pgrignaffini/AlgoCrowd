@@ -28,5 +28,5 @@ export function dateToTimestamp(dateStr) {
     // ✅ Get Unix timestamp
     const unixTimestamp = Math.floor(date.getTime() / 1000);
     console.log(unixTimestamp);
-    return unixTimestamp
+    return unixTimestamp * 1000
 }
