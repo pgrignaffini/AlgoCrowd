@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useAppContext } from '../context/AppContext'
 import { readGoalFromGlobalState, readTotalFundedFromGlobalState } from '../utils/TxOperations'
 import algosdk from 'algosdk'
+import { parseISO, format } from 'date-fns'
 
 export default function Project({ project, type }) {
 
@@ -29,8 +30,8 @@ export default function Project({ project, type }) {
 
     const now = new Date().getTime()
     const isOver = now > project.end ? true : false
-    const status = isOver ? "ended" : "in progress"
-    const finish = new Date(parseInt(project.end)).toString()
+    const status = isOver ? "ended" : "active"
+    const finish = format((new Date(parseInt(project.end))), "LLLL d, yyyy - hh:mm")
     const creatorAddress = project.creatorAddress
 
     const hasReachedGoal = totalInvested >= goal ? true : false
@@ -44,7 +45,6 @@ export default function Project({ project, type }) {
 
     const percentage = parseInt(calculatePercentage(totalInvested, goal))
     const progress = parseInt((percentage * 4) / 100)
-    const barProgress = progress === 0 ? `w-0 h-full text-center text-xs text-white bg-green-500 rounded-full` : `w-${progress}/4 h-full text-center text-xs text-white bg-green-500 rounded-full`
 
 
     return (
@@ -66,32 +66,32 @@ export default function Project({ project, type }) {
                     </p>
 
                     <div>
-                        <div className="bg-white rounded-lg block py-2 m-auto">
+                        <div className="bg-white rounded-lg block py-2 px-2 m-auto">
                             <div className="flex items-center mt-4">
-                                <a href="#" className="block relative">
+                                <a href="#" className="col block relative">
                                     <img alt="profil" src={personSrc}
                                         className="mx-auto object-cover rounded-full h-10 w-10 " />
                                 </a>
-                                <div className="flex flex-col justify-between ml-4 text-sm">
+                                <div className="flex-col justify-between ml-4 text-sm">
                                     <p className="text-gray-400 dark:text-gray-300">
                                         App ID: {project.appId}
                                     </p>
                                     <p className="text-gray-400 dark:text-gray-300">
-                                        {displayCreator}
+                                        Created by: {displayCreator}
                                     </p>
                                     <p className="text-gray-400 dark:text-gray-300">
-                                        Active till {finish}
+                                        Active till:  {finish.toString("M/d/yyyy")}
                                     </p>
                                 </div>
                                 <span
-                                    className="ml-16 text-xs font-medium inline-block py-1 px-2 uppercase rounded-full text-white bg-green-400">
-                                    Funding {status}
+                                    className={"ml-16 text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status == 'ended' ? "bg-red-400" : "bg-green-400")}>
+                                    {status}
                                 </span>
                             </div>
-                            <div className="w-full h-4 bg-gray-400 rounded-full mt-3">
+                            <div className="w-full h-4 bg-gray-400 rounded-full mt-3 text-center">
                                 <div
-                                    className={barProgress}>
-                                    {percentage}%
+                                    className={(progress === 0 ? `w-0` : `w-${progress}/4`) + " text-center h-full text-xs text-white " + (status == 'ended' ? "bg-red-500" : "bg-green-500") + " rounded-full px-1"}>
+                                    {!isNaN(percentage) ? (percentage.toString() + "%") : "Ended"}
                                 </div>
                             </div>
                         </div>
