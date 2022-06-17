@@ -8,7 +8,7 @@ export default function YourProjects({ projects }) {
         <div className="w-1/2 px-6">
             <div className="header text-center mb-10">
                 <div className="title text-center">
-                    <p className=" text-3xl font-semibold text-gray-800 mb-4">
+                    <p className=" text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
                         Your projects
                     </p>
                 </div>

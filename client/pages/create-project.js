@@ -73,9 +73,9 @@ export default function CreateProject() {
         } else { alert("You need to connect your account first") }
     }
     return (
-        <div>
+        <div className="bg-white dark:bg-gray-800">
             <div>
-                <div className="flex justify-center py-4">
+                <div className="flex justify-center py-4 text-gray-800 dark:text-gray-100">
                     <div className="flex">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 20 20"
                             fill="currentColor">
@@ -87,10 +87,10 @@ export default function CreateProject() {
                 </div>
 
                 <div className="title text-center mx-auto">
-                    <p className="text-4xl text-center font-bold text-gray-800 mb-4">
+                    <p className="text-4xl text-center font-bold text-gray-800 dark:text-gray-100 mb-4">
                         Create your project
                     </p>
-                    <p className="text-xl font-medium text-gray-400">
+                    <p className="text-xl font-medium text-gray-400 dark:text-gray-200">
                         Fund now your project through AlgoCrowd platform based on the Algorand Blockchain
                     </p>
                 </div>

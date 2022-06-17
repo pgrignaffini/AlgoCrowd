@@ -7,7 +7,6 @@ export default function Header() {
   const { addToast } = useToasts()
 
   useEffect(() => {
-    localStorage.theme = "light";
     const isConnected = localStorage.getItem('connectedAccount')
     if (isConnected) setIsAccountConnected(true)
   }, []);
@@ -39,10 +38,9 @@ export default function Header() {
   };
 
   return (
-    <nav className="w-full py-6 bg-white w-screen">
-      <div id="toast-container"></div>
+    <nav className="w-full py-6 bg-white dark:bg-gray-800 w-screen">
       <div className="flex items-center justify-between mx-auto xl:max-w-7xl lg:max-w-5xl md:max-w-3xl md:px-2 px-4">
-        <section className="flex items-center text-gray-900 space-x-2">
+        <section className="flex items-center text-gray-900 dark:text-gray-100 space-x-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-7 w-7"
@@ -63,7 +61,7 @@ export default function Header() {
           </a>
         </section>
         <section>
-          <ul className="md:space-x-8 space-x-6 text-gray-900 font-semibold hidden md:flex">
+          <ul className="md:space-x-8 space-x-6 text-gray-900 dark:text-gray-100  font-semibold hidden md:flex">
             <li className="relative group">
               <Link
                 href="/"

@@ -4,10 +4,10 @@ export default function ProjectsHeader({ title, subtitle }) {
     return (
         <div className="header text-center mb-12">
             <div className="title">
-                <p className="text-4xl font-bold text-gray-800 mb-4">
+                <p className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
                     {title}
                 </p>
-                <p className="text-2xl font-medium text-gray-400">
+                <p className="text-2xl font-medium text-gray-400 dark:text-gray-200 ">
                     {subtitle}
                 </p>
             </div>
