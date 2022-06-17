@@ -67,8 +67,8 @@ export default function Project({ project, type }) {
 
                     <div>
                         <div className="bg-white rounded-lg block py-2 px-2 m-auto">
-                            <div className="flex items-center mt-4">
-                                <a href="#" className="col block relative">
+                            <div className="flex items-center mt-2">
+                                <a href="#" className="ml-2 block relative">
                                     <img alt="profil" src={personSrc}
                                         className="mx-auto object-cover rounded-full h-10 w-10 " />
                                 </a>
@@ -84,7 +84,7 @@ export default function Project({ project, type }) {
                                     </p>
                                 </div>
                                 <span
-                                    className={"ml-16 text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status == 'ended' ? "bg-red-400" : "bg-green-400")}>
+                                    className={"ml-40 relative text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status == 'ended' ? "bg-red-400" : "bg-green-400")}>
                                     {status}
                                 </span>
                             </div>
