@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useToasts } from 'react-toast-notifications'
+import Link from "next/link";
 
 export default function Header() {
   const [isAccountConnected, setIsAccountConnected] = useState(false)
@@ -64,30 +65,30 @@ export default function Header() {
         <section>
           <ul className="md:space-x-8 space-x-6 text-gray-900 font-semibold hidden md:flex">
             <li className="relative group">
-              <a
+              <Link
                 href="/"
                 className="group outline-none rounded-lg"
               >
                 Home
-              </a>
+              </Link>
               <div className="w-full h-0.5 bg-transparent group-hover:bg-purple-500 transition-al absolute bottom-0" />
             </li>
             <li className="relative group">
-              <a
+              <Link
                 href="create-project"
                 className="outline-none rounded-lg"
               >
                 Create Project
-              </a>
+              </Link>
               <div className="w-full h-0.5 bg-transparent group-hover:bg-purple-500 transition-al absolute bottom-0" />
             </li>
             <li className="relative group">
-              <a
+              <Link
                 href="user-area"
                 className="outline-none rounded-lg"
               >
                 User Area
-              </a>
+              </Link>
               <div className="w-full h-0.5 bg-transparent group-hover:bg-purple-500 transition-al absolute bottom-0" />
             </li>
             <li>
