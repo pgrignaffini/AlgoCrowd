@@ -32,7 +32,6 @@ export default function Project({ project, type }) {
     const isOver = now > project.end ? true : false
     const status = isOver ? "ended" : "active"
     let finish = new Date(parseInt(project.end)).toString()
-    finish = (finish!=undefined) ? format(finish, "LLLL d, yyyy - hh:mm") : finish
     const creatorAddress = project.creatorAddress
 
     const hasReachedGoal = totalInvested >= goal ? true : false
