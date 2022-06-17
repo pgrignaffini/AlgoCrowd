@@ -1,7 +1,7 @@
 import React from 'react'
 import { closeCrowdfunding } from "../utils/ContractOperations";
 import { useAppContext } from '../context/AppContext';
-import {useToasts} from "react-toast-notifications";
+import { useToasts } from "react-toast-notifications";
 
 export default function CollectButton({ appID, disabled }) {
 
@@ -16,13 +16,13 @@ export default function CollectButton({ appID, disabled }) {
             await closeCrowdfunding(algodClient, parseInt(appID), connectedAccount)
             addToast("Claimed fund successfully", {
                 appearance: 'success',
-                autoDismiss: false,
+                autoDismiss: true,
             })
         }
         catch (e) {
             addToast("Failed to claim funds", {
                 appearance: 'error',
-                autoDismiss: false,
+                autoDismiss: true,
             })
         }
     }

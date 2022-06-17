@@ -5,7 +5,7 @@ import API from '../APIs/API';
 import Project from './Project';
 import ProjectsHeader from './ProjectsHeader';
 import { CONSTANTS } from '../constants/Constants';
-import {useToasts} from "react-toast-notifications";
+import { useToasts } from "react-toast-notifications";
 
 
 export default function FundProject({ project }) {
@@ -61,13 +61,13 @@ export default function FundProject({ project }) {
                 await optInApp(algodClient, parseInt(project.appId), account)
                 addToast("Opt-in successfully", {
                     appearance: 'success',
-                    autoDismiss: false,
+                    autoDismiss: true,
                 })
             }
             catch (e) {
                 addToast("Failed to opt-in", {
                     appearance: 'error',
-                    autoDismiss: false,
+                    autoDismiss: true,
                 })
             }
         }
@@ -77,13 +77,13 @@ export default function FundProject({ project }) {
             await API.fundApp(account, project.appId, amount)
             addToast("Funds sent successfully", {
                 appearance: 'success',
-                autoDismiss: false,
+                autoDismiss: true,
             })
         }
         catch (e) {
             addToast("Failed to fund project", {
                 appearance: 'error',
-                autoDismiss: false,
+                autoDismiss: true,
             })
         }
 
