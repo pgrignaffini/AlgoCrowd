@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useToasts } from 'react-toast-notifications'
 
 export default function Header() {
-
   const [isAccountConnected, setIsAccountConnected] = useState(false)
+  const { addToast } = useToasts()
 
   useEffect(() => {
     localStorage.theme = "light";
@@ -16,8 +17,15 @@ export default function Header() {
       const account = await getUserAccount();
       localStorage.setItem('connectedAccount', String(account));
       if (account) setIsAccountConnected(true)
+      addToast("Account connected successfully", {
+        appearance: 'success',
+        autoDismiss: true,
+      })
     } else {
-      alert("This browser doesn't have the required AlgoSigner extension!");
+      addToast("This browser doesn't have the AlgoSigner extension installed", {
+        appearance: 'warning',
+        autoDismiss: true,
+      })
     }
   };
 
@@ -31,6 +39,7 @@ export default function Header() {
 
   return (
     <nav className="w-full py-6 bg-white w-screen">
+      <div id="toast-container"></div>
       <div className="flex items-center justify-between mx-auto xl:max-w-7xl lg:max-w-5xl md:max-w-3xl md:px-2 px-4">
         <section className="flex items-center text-gray-900 space-x-2">
           <svg
