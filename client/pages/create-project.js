@@ -4,6 +4,7 @@ import { useAppContext } from '../context/AppContext';
 import API from "../APIs/API";
 import { dateToTimestamp } from "../utils/Utilities";
 import { useToasts } from "react-toast-notifications";
+import Project from "../components/Project";
 
 
 export default function CreateProject() {
@@ -12,6 +13,7 @@ export default function CreateProject() {
     const algodClient = context["algodClient"]
     const [account, setAccount] = useState()
     const { addToast } = useToasts()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
 
@@ -37,6 +39,7 @@ export default function CreateProject() {
         // Stop the form from submitting and refreshing the page.
         event.preventDefault()
 
+        setLoading(true)
         // Get data from the form.
         const data = {
             name: event.target.name.value,
@@ -71,6 +74,7 @@ export default function CreateProject() {
                 })
             }
         } else { alert("You need to connect your account first") }
+        setLoading(false)
     }
     return (
         <div className="bg-white dark:bg-gray-800">
@@ -151,9 +155,21 @@ export default function CreateProject() {
                             </div>
                         </div>
 
-                        <div className='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
-                            <button type="submit"
-                                className='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Create
+                        <div className='flex items-center justify-center md:gap-8 gap-4 pt-5 pb-5'>
+                            {loading ?
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="purple"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                :
+                                ""
+                            }
+                            <button type="submit" className='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>
+                                Create
                             </button>
                         </div>
                     </form>
