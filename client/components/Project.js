@@ -55,10 +55,10 @@ export default function Project({ project, type }) {
                     query: project
                 }}>
                     <img alt="blog photo" src={blogSrc}
-                        className="max-h-40 w-full object-cover" />
+                         className="max-h-40 w-full object-cover"/>
                 </Link>
-                <div className="bg-white dark:bg-gray-800 w-full p-4">
-                    <p className="text-gray-800 dark:text-white text-xl font-medium mb-2">
+                <div className="bg-white dark:bg-gray-700 w-full p-4">
+                    <p className="text-gray-800 font-semibold dark:text-white text-xl font-medium mb-2">
                         {project.name}
                     </p>
                     <p className="text-gray-500 dark:text-gray-300 font-light font-medium text-md">
@@ -66,38 +66,45 @@ export default function Project({ project, type }) {
                     </p>
 
                     <div>
-                        <div className="bg-white rounded-lg block py-2 px-2 m-auto">
-                            <div className="flex items-center mt-2">
-                                <a href="#" className="col block relative">
-                                    <img alt="profil" src={personSrc}
-                                        className="mx-auto object-cover rounded-full h-10 w-10 " />
-                                </a>
-                                <div className="flex-col justify-between ml-4 text-sm">
-                                    <p className="text-gray-400 dark:text-gray-300">
-                                        App ID: {project.appId}
-                                    </p>
-                                    <p className="text-gray-400 dark:text-gray-300">
-                                        Created by: {displayCreator}
-                                    </p>
-                                    <p className="text-gray-400 dark:text-gray-300">
-                                        Active till:  {finish.toString("M/d/yyyy")}
-                                    </p>
-                                </div>
-                                <span
-                                    className={"ml-40 text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status == 'ended' ? "bg-red-400" : "bg-green-400")}>
+                        <Link href={{
+                            pathname: `/${encodeURIComponent(project.appId)}`,
+                            query: project
+                        }}>
+                            <div className="rounded-lg block py-2 px-2 m-auto">
+                                <div className="md:flex items-center mt-2">
+                                    <a href="#" className="col block relative">
+                                        <img alt="profil" src={personSrc}
+                                             className="mx-auto object-cover rounded-full h-10 w-20 "/>
+                                    </a>
+                                    <div className="flex-col justify-between md:ml-4 text-sm">
+                                        <p className="text-gray-400 dark:text-gray-300">
+                                            App ID: <strong>{project.appId}</strong>
+                                        </p>
+                                        <p className="text-gray-400 dark:text-gray-300">
+                                            Created by: <strong>{displayCreator}</strong>
+                                        </p>
+                                        <p className="text-gray-400 dark:text-gray-300">
+                                            Active till: <strong>{finish.toString("M/d/yyyy")}</strong>
+                                        </p>
+                                    </div>
+                                    <span
+                                        className={"md:ml-40 text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status === 'ended' ? "bg-red-400" : "bg-green-400")}>
                                     {status}
                                 </span>
-                            </div>
-                            <div className="w-full h-4 bg-gray-400 rounded-full mt-3 text-center">
-                                <div
-                                    className={(progress === 0 ? `w-0` : `w-${progress}/4`) + " text-center h-full text-xs text-white " + (status == 'ended' ? "bg-red-500" : "bg-green-500") + " rounded-full px-1"}>
-                                    {!isNaN(percentage) ? (percentage.toString() + "%") : "Ended"}
+                                </div>
+                                <div className="w-full h-4 bg-gray-400 rounded-full mt-3 text-center">
+                                    <div
+                                        className={(progress === 0 ? `w-0` : `w-${progress}/4`) + " text-center h-full text-xs text-white " + (status === 'ended' ? "bg-red-500" : "bg-green-500") + " rounded-full px-1"}>
+                                        {!isNaN(percentage) ? (percentage.toString() + "%") : "Ended"}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                         <div className="w-full text-center">
-                            {type === "funded" && <ClaimRefundsButton appID={project.appId} disabled={!(isOver && !hasReachedGoal)} />}
-                            {type === "created" && <CollectButton appID={project.appId} disabled={!(isOver && hasReachedGoal)} />}
+                            {type === "funded" &&
+                                <ClaimRefundsButton appID={project.appId} disabled={!(isOver && !hasReachedGoal)}/>}
+                            {type === "created" &&
+                                <CollectButton appID={project.appId} disabled={!(isOver && hasReachedGoal)}/>}
                         </div>
                     </div>
                 </div>

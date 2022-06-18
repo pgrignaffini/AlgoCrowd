@@ -34,8 +34,8 @@ export default function UserArea() {
     }, [])
 
     return (
-        <div>
-            <div className="flex mx-auto xl:max-w-7xl lg:max-w-5xl md:max-w-3xl md:px-2 px-4 bg-white pt-12">
+        <div className="bg-white dark:bg-gray-800">
+            <div className="flex mx-auto xl:max-w-7xl lg:max-w-5xl md:max-w-3xl md:px-2 px-4 pt-12">
                 <YourProjects projects={yourProjects} />
                 <FundedProjects projects={fundedProjects} />
             </div>

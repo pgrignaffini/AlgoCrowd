@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <div className='py-5'>
-            <footer className="bg-white dark:bg-gray-800 w-full pt-5 pb-8">
+        <div className="bg-white dark:bg-gray-800 py-5">
+            <footer className=" w-full pt-5 pb-8">
                 <div className="max-w-screen-xl mx-auto px-4">
                     <ul className="max-w-screen-md mx-auto text-lg font-medium flex flex-wrap justify-between">
                         <li className="my-2">

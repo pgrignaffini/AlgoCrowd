@@ -93,29 +93,31 @@ export default function FundProject({ project }) {
 
 
     return (
-        <div className="w-full mx-auto xl:max-w-7xl lg:max-w-5xl md:max-w-3xl md:px-2 px-4 bg-white pt-12">
-            <ProjectsHeader title={title} subtitle="Don't miss your chance" />
-            <div className="w-1/2 m-auto">
-                <Project project={project} type="none" />
-                <div className="p-6">
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex flex-col mb-2">
-                            <div className=" relative ">
-                                <input type="number" id="amount" step=".01" min="0"
-                                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                    name="" placeholder="Amount" required />
+        <div className="bg-white dark:bg-gray-800">
+            <div className="w-full mx-auto xl:max-w-7xl lg:max-w-5xl md:max-w-3xl md:px-2 px-4 pt-12">
+                <ProjectsHeader title={title} subtitle="Don't miss your chance"/>
+                <div className="w-1/2 m-auto">
+                    <Project project={project} type="none"/>
+                    <div className="p-6">
+                        <form onSubmit={handleSubmit}>
+                            <div className="flex flex-col mb-2">
+                                <div className=" relative text-center ">
+                                    <input type="number" id="amount" step=".01" min="0"
+                                           className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 mx-auto w-1/2 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                           name="" placeholder="Amount" required/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="w-full text-center">
-                            <button type="submit"
-                                className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg disabled:opacity-25 "
-                                disabled={isCreator || isOver}>
-                                Send funds
-                            </button>
-                        </div>
-                    </form>
+                            <div className="w-full text-center">
+                                <button type="submit"
+                                        className="w-32 mt-4 mb-2 py-2 px-4  bg-pink-500 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg disabled:opacity-25 "
+                                        disabled={isCreator || isOver}>
+                                    Send funds
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
