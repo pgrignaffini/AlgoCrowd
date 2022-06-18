@@ -98,8 +98,6 @@ export default function CreateProject() {
             <div className="flex mt-5 items-center justify-center">
                 <div className="grid bg-white rounded-lg w-11/12 md:w-9/12 lg:w-1/2">
                     <form onSubmit={handleSubmit}>
-
-
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
                             <div className="grid grid-cols-1">
                                 <label
