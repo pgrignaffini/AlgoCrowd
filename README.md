@@ -29,3 +29,169 @@ Run tests:
 
 Format code:
 * `black .`
+
+# Server
+
+Command to push on heroku:
+git push heroku main
+
+## Database Tables
+
+- Table `application` - contains the applications created: appId (PK), creatorAddress, name, description, imagUrl, start, end, goal.
+- Table `fundedApplication` - contains all the investments made by investors in the various projects : funderAddress, appId, amount.
+
+## Server Endpoints
+
+- POST `/api/applications/create`
+  - request parameters: none
+  - request body content: all the parameters requested to store an application
+  ```json
+    {"appId":"96246912","creatorAddress":"R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI","description":"ProjectDescription","imageUrl":"www.test.com/imageUrl","start":"1655907720000.0","end":"1656080520000.0","goal":"1"}
+  ```
+  - response body: none
+
+  ---
+
+- POST `/api/applications/fund`
+  - request parameters: none
+  - request body content: all the parameters requested to store an application fund action
+  ```json
+    {"funderAddress":"R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI","appId":"96246912","amount":"2"}
+  ```
+  - response body: none
+
+- GET `/api/applications`
+  - request parameters: none 
+  - response body content: all the project created
+  ```json
+    [
+      {
+          "appId": "96246912",
+          "creatorAddress": "R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+          "name": "test",
+          "description": "test",
+          "imageUrl": "test",
+          "start": "1655907720000.0",
+          "end": "1656080520000.0",
+          "goal": 2
+      }, 
+      {
+          "appId": "96246913",
+          "creatorAddress": "XOBID66KBZ4C4ZZLEQGCHK2L2AIRCOS2XCS726XDCEJRJYSZWTZ64JN3RQ",
+          "name": "test2",
+          "description": "test2",
+          "imageUrl": "test2",
+          "start": "1655907720000.0",
+          "end": "1656080520000.0",
+          "goal": 2
+      }
+    ]
+   ```
+  ---
+
+
+- GET `/api/applications?creatorAddress=...`
+  - request parameters: creatorAddress
+  - response body content: all the project created by the specified creatorAddress
+  ```json
+    [
+      {
+          "appId": "96246912",
+          "creatorAddress": "R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+          "name": "test",
+          "description": "test",
+          "imageUrl": "test",
+          "start": "1655907720000.0",
+          "end": "1656080520000.0",
+          "goal": 2
+      }
+    ]
+   ```
+  ---
+
+- GET `/api/application?appId=...`
+  - request parameters: appId
+  - response body content: the application with the specified appId
+  ```json
+    [
+      {
+          "appId": "96246912",
+          "creatorAddress": "R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+          "name": "test",
+          "description": "test",
+          "imageUrl": "test",
+          "start": "1655907720000.0",
+          "end": "1656080520000.0",
+          "goal": 2
+      }
+    ]
+   ```
+  ---
+
+- GET `/api/funder?funderAddress=...&&appInfo=...`
+  - request parameters: funderAddress, appInfo {1 or 0} (optional)
+  - response body content: all the funded applications from a specified funderAddress and appInfo (optional)
+  ```json
+    [
+      {
+          "funderAddress": "XOBID66KBZ4C4ZZLEQGCHK2L2AIRCOS2XCS726XDCEJRJYSZWTZ64JN3RQ",
+          "amount": "1",
+          "appId": "96246912",
+          "creatorAddress": "R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+          "name": "test",
+          "description": "test",
+          "imageUrl": "test",
+          "start": "1655907720000.0",
+          "end": "1656080520000.0",
+          "goal": 2
+      }, 
+      {
+          "funderAddress": "XOBID66KBZ4C4ZZLEQGCHK2L2AIRCOS2XCS726XDCEJRJYSZWTZ64JN3RQ",
+          "amount": "1",
+          "appId": "96246913",
+          "creatorAddress": "R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+          "name": "test2",
+          "description": "test2",
+          "imageUrl": "test2",
+          "start": "1655907720000.0",
+          "end": "1656080520000.0",
+          "goal": 2
+      }
+    ]
+   ```
+  ---
+
+- GET `/api/funder?funderAddress=...&&appId=...&&appInfo=...`
+  - request parameters: funderAddress, appId, appInfo {1 or 0} (optional)
+  - response body content: the funded amount invested from the specified funderAddress related to a specific application and the appInfo (optional)
+  ```json
+    [
+      {
+          "funderAddress": "XOBID66KBZ4C4ZZLEQGCHK2L2AIRCOS2XCS726XDCEJRJYSZWTZ64JN3RQ",
+          "amount": "1",
+          "appId": "96246912",
+          "creatorAddress": "R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+          "name": "test",
+          "description": "test",
+          "imageUrl": "test",
+          "start": "1655907720000.0",
+          "end": "1656080520000.0",
+          "goal": 2
+      }
+    ]
+   ```
+  ---
+
+- GET `/api/funded`
+  - request parameters: appId
+  - response body content: total funded amount related to a specific appId
+  ```json
+    [
+      {
+          "amount": "3",
+      }
+    ]
+   ```
+  ---
+
+
