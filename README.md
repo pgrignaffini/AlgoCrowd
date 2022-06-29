@@ -8,6 +8,7 @@ AlgoCrowd is a decentralized crowdfunding platform on Algorand. The demo app is 
   - [Development Setup](#development-setup)
 - [Client](#client)
   - [Client Application Routes](#client-application-routes)
+- [Overall Architecture](#overall-architecture)
 - [Server](#server)
   - [Server Endpoints](#server-endpoints)
 - [Database](#database)
@@ -45,8 +46,8 @@ Run tests:
 Format code:
 * `black .`
 
-## Overall Architechture
-![](./img/architechture_b.jpg)
+## Overall Architecture
+![](./img/architecture_b.jpg)
 
 ## Client
 
