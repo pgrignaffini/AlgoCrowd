@@ -2,7 +2,7 @@
 AlgoCrowd is a decentralized crowdfunding platform on Algorand. The demo app is online at: 
 - https://main--effulgent-marshmallow-2fa690.netlify.app
 
-## Contents
+## Table of Contents
 - [Algorand Crowdfunding Demo](#algorand-crowdfunding-demo)
   - [Usage](#usage)
   - [Development Setup](#development-setup)
