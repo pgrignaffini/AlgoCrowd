@@ -71,6 +71,8 @@ The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
   ```
   - response body: none
 
+  ---
+
 - GET `/api/applications`
   - request parameters: none 
   - response body content: all the project created
@@ -99,7 +101,6 @@ The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
     ]
    ```
   ---
-
 
 - GET `/api/applications?creatorAddress=...`
   - request parameters: creatorAddress
