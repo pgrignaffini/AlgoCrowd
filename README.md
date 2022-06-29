@@ -30,6 +30,15 @@ Run tests:
 Format code:
 * `black .`
 
+# Client
+
+## Client Application Routes
+
+- Route `/`: contains the initial page of the app, it shows all the active projects.
+- Route `/create-project`: contains the form that allows the user to create a new project.
+- Route `/user-ares` : contains all the projects created and funded from the user.
+- Route `/${appId}` : contains the project with the specified appId. From here the user can found it.
+
 # Server
 
 The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
