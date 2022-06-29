@@ -49,13 +49,13 @@ The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
   - request body content: all the parameters requested to store an application
   ```json
   {
-    "appId":"96246912",
-    "creatorAddress":"R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
-    "description":"ProjectDescription",
-    "imageUrl":"www.test.com/imageUrl",
-    "start":"1655907720000.0",
-    "end":"1656080520000.0",
-    "goal":"1"
+      "appId":"96246912",
+      "creatorAddress":"R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+      "description":"ProjectDescription",
+      "imageUrl":"www.test.com/imageUrl",
+      "start":"1655907720000.0",
+      "end":"1656080520000.0",
+      "goal":"1"
   }
   ```
   - response body: none
@@ -67,9 +67,9 @@ The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
   - request body content: all the parameters requested to store an application fund action
   ```json
     {
-      "funderAddress":"R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
-      "appId":"96246912",
-      "amount":"2"
+        "funderAddress":"R3Z6A6BUXWRYZ3IFBSK7Y54EBN6FRBSYGS4GNTNE2DB5GXJAC64JOMNFNI",
+        "appId":"96246912",
+        "amount":"2"
     }
   ```
   - response body: none
