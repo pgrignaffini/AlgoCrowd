@@ -226,7 +226,7 @@ Format code:
     ]
    ```
 ## Database
-In order to be persistend the app uses SQLite3, a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine (https://www.sqlite.org/docs.html).
+In order to be persistent the app uses SQLite3, a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine (https://www.sqlite.org/docs.html).
 
 ### Database Tables
 
