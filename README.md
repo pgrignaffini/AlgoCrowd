@@ -34,11 +34,6 @@ Format code:
 
 The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
 
-## Database Tables
-
-- Table `application` - contains the applications created: appId (PK), creatorAddress, name, description, imagUrl, start, end, goal.
-- Table `fundedApplication` - contains all the investments made by investors in the various projects : funderAddress, appId, amount.
-
 ## Server Endpoints
 
 - POST `/api/applications/create`
@@ -204,6 +199,11 @@ The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
       }
     ]
    ```
-  ---
+# Database
+For persistence the app use SQLite3, a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine. (https://www.sqlite.org/docs.html)
 
+## Database Tables
+
+- Table `application` - contains the applications created: appId (PK), creatorAddress, name, description, imagUrl, start, end, goal.
+- Table `fundedApplication` - contains all the investments made by investors in the various projects : funderAddress, appId, amount.
 
