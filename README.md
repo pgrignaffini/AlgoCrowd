@@ -31,6 +31,7 @@ Format code:
 * `black .`
 
 # Client
+The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
 
 ## Client Application Routes
 
@@ -40,8 +41,6 @@ Format code:
 - Route `/${appId}` : contains the project with the specified appId. From here the user can found it.
 
 # Server
-
-The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
 
 ## Server Endpoints
 
