@@ -45,6 +45,9 @@ Run tests:
 Format code:
 * `black .`
 
+## Overall Architechture
+![](./img/architecture.png)
+
 ## Client
 
 ### Client Application Routes
