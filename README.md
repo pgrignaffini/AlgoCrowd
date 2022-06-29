@@ -1,13 +1,27 @@
-# Algorand Crowdfunding Demo
+# AlgoCrowd
+AlgoCrowd is a decentralized crowdfunding platform on Algorand. The app is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
+
+## Contents
+- [Algorand Crowdfunding Demo](#algorand-crowdfunding-demo)
+  - [Usage](#usage)
+  - [Development Setup](#development-setup)
+- [Client](#client)
+  - [Client Application Routes](#client-application-routes)
+- [Server](#server)
+  - [Server Endpoints](#server-endpoints)
+- [Database](#database)
+  - [Database Tables](#database-tables)
+
+## Algorand Crowdfunding Demo
 
 This demo is an on-chain crowdfunding using smart contracts on the Algorand blockchain.
 
-## Usage
+### Usage
 
 The file `crowdfunding-demo/crowdfunding/operations.py` provides a set of functions that can be used to create and interact
 with crowdfunding. See that file for documentation.
 
-## Development Setup
+### Development Setup
 
 This repo requires Python 3.6 or higher. We recommend you use a Python virtual environment to install
 the required dependencies.
@@ -30,19 +44,18 @@ Run tests:
 Format code:
 * `black .`
 
-# Client
-The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
+## Client
 
-## Client Application Routes
+### Client Application Routes
 
 - Route `/`: contains the initial page of the app, it shows all the active projects.
 - Route `/create-project`: contains the form that allows the user to create a new project.
 - Route `/user-ares` : contains all the projects created and funded from the user.
 - Route `/${appId}` : contains the project with the specified appId. From here the user can fund it.
 
-# Server
+## Server
 
-## Server Endpoints
+### Server Endpoints
 
 - POST `/api/applications/create`
   - request parameters: none
@@ -207,10 +220,10 @@ The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
       }
     ]
    ```
-# Database
+## Database
 For persistence the app use SQLite3, a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine. (https://www.sqlite.org/docs.html)
 
-## Database Tables
+### Database Tables
 
 - Table `application` - contains the applications created: appId (PK), creatorAddress, name, description, imagUrl, start, end, goal.
 - Table `fundedApplication` - contains all the investments made by investors in the various projects : funderAddress, appId, amount.
