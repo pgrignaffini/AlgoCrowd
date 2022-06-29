@@ -46,7 +46,7 @@ Format code:
 * `black .`
 
 ## Overall Architechture
-![](./img/architecture.png)
+![](./img/architecture.jpg)
 
 ## Client
 
