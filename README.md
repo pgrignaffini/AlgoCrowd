@@ -32,8 +32,7 @@ Format code:
 
 # Server
 
-Command to push on heroku:
-git push heroku main
+The demo is online at: https://main--effulgent-marshmallow-2fa690.netlify.app
 
 ## Database Tables
 
