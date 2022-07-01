@@ -6,13 +6,13 @@ AlgoCrowd is a decentralized crowdfunding platform on Algorand. The demo app is 
 - [Algorand Crowdfunding Demo](#algorand-crowdfunding-demo)
   - [Usage](#usage)
   - [Development Setup](#development-setup)
-- [Client](#client)
-  - [Client Application Routes](#client-application-routes)
-- [Overall Architecture](#overall-architecture)
-- [Server](#server)
-  - [Server Endpoints](#server-endpoints)
-- [Database](#database)
-  - [Database Tables](#database-tables)
+- [System Architecture](#system-architecture)
+  - [Client](#client)
+    - [Client Application Routes](#client-application-routes)
+  - [Server](#server)
+    - [Server Endpoints](#server-endpoints)
+  - [Database](#database)
+    - [Database Tables](#database-tables)
 
 ## Algorand Crowdfunding Demo
 
@@ -46,21 +46,21 @@ Run tests:
 Format code:
 * `black .`
 
-## Overall Architecture
+## System Architecture
 ![](./img/architecture_b.jpg)
 
-## Client
+### Client
 
-### Client Application Routes
+#### Client Application Routes
 
 - Route `/`: contains the initial page of the app, it shows all the active projects.
 - Route `/create-project`: contains the form that allows the user to create a new project.
 - Route `/user-ares` : contains all the projects created and funded from the user.
 - Route `/${appId}` : contains the project with the specified appId. From here the user can fund it.
 
-## Server
+### Server
 
-### Server Endpoints
+#### Server Endpoints
 
 - POST `/api/applications/create`
   - request parameters: none
@@ -225,10 +225,10 @@ Format code:
       }
     ]
    ```
-## Database
+### Database
 In order to be persistent the app uses SQLite3, a C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine (https://www.sqlite.org/docs.html).
 
-### Database Tables
+#### Database Tables
 
 - Table `application` - contains the applications created: appId (PK), creatorAddress, name, description, imagUrl, start, end, goal.
 - Table `fundedApplication` - contains all the investments made by investors in the various projects : funderAddress, appId, amount.
