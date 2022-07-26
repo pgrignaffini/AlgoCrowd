@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useAppContext } from '../context/AppContext'
 import { readGoalFromGlobalState, readTotalFundedFromGlobalState } from '../utils/TxOperations'
 import algosdk from 'algosdk'
-import {format} from 'date-fns'
 
 export default function Project({ project, type }) {
 
@@ -55,10 +54,10 @@ export default function Project({ project, type }) {
                     query: project
                 }}>
                     <img alt="blog photo" src={blogSrc}
-                         className="max-h-40 w-full object-cover"/>
+                        className="max-h-40 w-full object-cover" />
                 </Link>
                 <div className="bg-white dark:bg-gray-700 w-full p-4">
-                    <p className="text-gray-800 font-semibold dark:text-white text-xl font-medium mb-2">
+                    <p className="text-gray-800 font-semibold dark:text-white text-xl mb-2">
                         {project.name}
                     </p>
                     <p className="text-gray-500 dark:text-gray-300 font-light font-medium text-md">
@@ -74,7 +73,7 @@ export default function Project({ project, type }) {
                                 <div className="md:flex items-center mt-2">
                                     <a href="#" className="col block relative">
                                         <img alt="profil" src={personSrc}
-                                             className="mx-auto object-cover rounded-full h-10 w-20 "/>
+                                            className="mx-auto object-cover rounded-full h-10 w-20 " />
                                     </a>
                                     <div className="flex-col justify-between md:ml-4 text-sm">
                                         <p className="text-gray-400 dark:text-gray-300">
@@ -89,8 +88,8 @@ export default function Project({ project, type }) {
                                     </div>
                                     <span
                                         className={"md:ml-40 text-xs font-medium inline-block py-1 px-5 uppercase rounded-full text-white " + (status === 'ended' ? "bg-red-400" : "bg-green-400")}>
-                                    {status}
-                                </span>
+                                        {status}
+                                    </span>
                                 </div>
                                 <div className="w-full h-4 bg-gray-400 rounded-full mt-3 text-center">
                                     <div
@@ -102,9 +101,9 @@ export default function Project({ project, type }) {
                         </Link>
                         <div className="w-full text-center">
                             {type === "funded" &&
-                                <ClaimRefundsButton appID={project.appId} disabled={!(isOver && !hasReachedGoal)}/>}
+                                <ClaimRefundsButton appID={project.appId} disabled={!(isOver && !hasReachedGoal)} />}
                             {type === "created" &&
-                                <CollectButton appID={project.appId} disabled={!(isOver && hasReachedGoal)}/>}
+                                <CollectButton appID={project.appId} disabled={!(isOver && hasReachedGoal)} />}
                         </div>
                     </div>
                 </div>
